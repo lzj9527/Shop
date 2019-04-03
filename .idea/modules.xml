@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/androidExtendLib2/androidExtendLib2.iml" filepath="$PROJECT_DIR$/androidExtendLib2/androidExtendLib2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jPushSDK300/jPushSDK300.iml" filepath="$PROJECT_DIR$/jPushSDK300/jPushSDK300.iml" />
+      <module fileurl="file://$PROJECT_DIR$/someProject1-e4aa0094ecba72f0e7e48463770bd6fd6f8eec99.iml" filepath="$PROJECT_DIR$/someProject1-e4aa0094ecba72f0e7e48463770bd6fd6f8eec99.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tryApp2ForShop/tryApp2ForShop.iml" filepath="$PROJECT_DIR$/tryApp2ForShop/tryApp2ForShop.iml" />
+    </modules>
+  </component>
+</project>
