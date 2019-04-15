@@ -28,6 +28,12 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.shiyou.tryapp2.Config;
 import com.shiyou.tryapp2.RequestManager;
 import com.shiyou.tryapp2.RequestManager.RequestCallback;
@@ -42,6 +48,18 @@ import com.shiyou.tryapp2.data.response.GoodsCategorysResponse;
 import com.shiyou.tryapp2.data.response.GoodsCategorysResponse.CategoryItem;
 import com.shiyou.tryapp2.data.response.ShopLogoAndADResponse;
 import com.shiyou.tryapp2.shop.zsa.R;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MainIndexFragment extends BaseFragment
 {
@@ -167,103 +185,178 @@ public class MainIndexFragment extends BaseFragment
 
 	private void loadAdvertisements()
 	{
-		loadShopLogoAndAD();
-	}
+//		String json="{ \"code\": 0, \"data\": [ { \"id\": 0, \"name\": \"用户广告\", \"thumb\": \"http://images.i888vip.com/WZ38S4xC9cw9x83rtZRe747eE48U3z.jpg\", \"goods_id\": \"\", \"displayorder\": 0 }, { \"id\": 14, \"name\": \"十箭十心\", \"thumb\": \"http://images.i888vip.com/F17B3KCM2CkF17AUXxIM1UZcamkiA1.jpg\", \"goods_id\": \"2191\", \"displayorder\": 9, \"link\": \"https://api.i888vip.com/goods/detail?id=2191\", \"gcate\": 1, \"customization\": 0 },{ \"id\": 7, \"name\": \"双面戴\", \"thumb\": \"http://images.i888vip.com/F94K94t94m9oW45mtt99BKTVT3HhZK.jpg\", \"goods_id\": \"2699\", \"displayorder\": 0, \"link\": \"https://api.i888vip.com/goods/detail?id=2699\", \"gcate\": 1, \"customization\": 0 },{ \"id\": 15, \"name\": \"十二星座\", \"thumb\": \"http://images.i888vip.com/VoA0kd0SD4sBA07spC2KK0M72k0k20.jpg\", \"goods_id\": \"2716\", \"displayorder\": 0, \"link\": \"https://api.i888vip.com/goods/detail?id=2716\", \"gcate\": 1, \"customization\": 0 } ] }".replaceAll("\"","\'");
+//		GsonBuilder gb = new GsonBuilder();
+//		Gson gson = gb.create();
+////		mShopLogoAndADResponse=gson.fromJson(json,ShopLogoAndADResponse.class);
+//		JsonParser jsonParser=new JsonParser();
+//		ArrayList<ShopLogoAndADResponse> beans=new ArrayList<>();
+//		JsonArray jsonArray = jsonParser.parse(json).getAsJsonArray();
+//		for (JsonElement user : jsonArray) {
+//			//使用GSON，直接转成Bean对象
+//			ShopLogoAndADResponse shopLogoAndADResponse = gson.fromJson(user, ShopLogoAndADResponse.class);
+//			beans.add(shopLogoAndADResponse);
+//		}
 
+//		mBannerADListResponse=gson.fromJson(json,BannerADListResponse.class);
+		loadShopLogoAndAD();
+//		loadBannerADList();
+//		ensureAdvertisementPager();
+	}
+	private JsonArray jsonArray;
+	private  ArrayList<ShopLogoAndADResponse> beans;
 	private void loadShopLogoAndAD()
 	{
-		RequestManager.loadShopLogoAndAD(getContext(), LoginHelper.getUserKey(getContext()), new RequestCallback()
-		{
+//		RequestManager.loadShopLogoAndAD(getContext(), LoginHelper.getUserKey(getContext()), new RequestCallback()
+//		{
+//			@Override
+//			public void onRequestResult(int requestCode, long taskId, BaseResponse response, DataFrom from)
+//			{
+//				if (response.resultCode == BaseResponse.RESULT_OK)
+//				{
+//					mShopLogoAndADResponse = (ShopLogoAndADResponse)response;
+//				}
+//				else
+//				{
+//					mShopLogoAndADResponse = null;
+//					showToast(response.error);
+//				}
+//				loadBannerADList();
+//			}
+//
+//			@Override
+//			public void onRequestError(int requestCode, long taskId, ErrorInfo error)
+//			{
+//				showToast("网络错误: " + error.errorCode);
+//				mShopLogoAndADResponse = null;
+//				loadBannerADList();
+//			}
+//		});
+		final Request request=new Request.Builder().url(Config.LoadShopLogoAndADUrl).addHeader("Authorization","Bearer"+Config.token).addHeader("accept","application/vnd.zltech.shop.v1+json").get().build();
+		OkHttpClient okHttpClient=new OkHttpClient();
+		okHttpClient.newCall(request).enqueue(new Callback() {
 			@Override
-			public void onRequestResult(int requestCode, long taskId, BaseResponse response, DataFrom from)
-			{
-				if (response.resultCode == BaseResponse.RESULT_OK)
-				{
-					mShopLogoAndADResponse = (ShopLogoAndADResponse)response;
-				}
-				else
-				{
-					mShopLogoAndADResponse = null;
-					showToast(response.error);
-				}
-				loadBannerADList();
+			public void onFailure(Call call, IOException e) {
+//				loadBannerADList();
+				ensureAdvertisementPager();
 			}
 
+
 			@Override
-			public void onRequestError(int requestCode, long taskId, ErrorInfo error)
-			{
-				showToast("网络错误: " + error.errorCode);
-				mShopLogoAndADResponse = null;
-				loadBannerADList();
+			public void onResponse(Call call, Response response) throws IOException {
+//					String json=response.body().string().replaceAll("\"","\'");
+					String json="[ { \"id\": 0, \"name\": \"用户广告\", \"thumb\": \"http://images.i888vip.com/WZ38S4xC9cw9x83rtZRe747eE48U3z.jpg\", \"goodsid\": \"\", \"displayorder\": 0 }, { \"id\": 14, \"name\": \"十箭十心\", \"thumb\": \"http://images.i888vip.com/F17B3KCM2CkF17AUXxIM1UZcamkiA1.jpg\", \"goodsid\": \"2189\", \"displayorder\": 9, \"link\": \"https://api.i888vip.com/goods/detail?id=2189\", \"gcate\": 1, \"customization\": 0 }, { \"id\": 7, \"name\": \"双面戴\", \"thumb\": \"http://images.i888vip.com/F94K94t94m9oW45mtt99BKTVT3HhZK.jpg\", \"goodsid\": \"2699\", \"displayorder\": 0, \"link\": \"https://api.i888vip.com/goods/detail?id=2699\", \"gcate\": 1, \"customization\": 0 }, { \"id\": 15, \"name\": \"十二星座\", \"thumb\": \"http://images.i888vip.com/VoA0kd0SD4sBA07spC2KK0M72k0k20.jpg\", \"goodsid\": \"2716\", \"displayorder\": 0, \"link\": \"https://api.i888vip.com/goods/detail?id=2716\", \"gcate\": 1, \"customization\": 0 } ]".replaceAll("\"","\'");
+
+				GsonBuilder gb = new GsonBuilder();
+				Gson gson = gb.create();
+//		mShopLogoAndADResponse=gson.fromJson(json,ShopLogoAndADResponse.class);
+				JsonParser jsonParser=new JsonParser();
+				beans=new ArrayList<>();
+				jsonArray=new JsonArray();
+				jsonArray = jsonParser.parse(json).getAsJsonArray();
+				for (JsonElement user : jsonArray) {
+					//使用GSON，直接转成Bean对象
+					ShopLogoAndADResponse shopLogoAndADResponse = gson.fromJson(user, ShopLogoAndADResponse.class);
+					beans.add(shopLogoAndADResponse);
+				}
+//				loadBannerADList();
+				ensureAdvertisementPager();
 			}
 		});
 	}
 
-	private void loadBannerADList()
-	{
-		RequestManager.loadBannerADList(getContext(), new RequestCallback()
-		{
-			@Override
-			public void onRequestResult(int requestCode, long taskId, BaseResponse response, DataFrom from)
-			{
-				if (response.resultCode == BaseResponse.RESULT_OK)
-				{
-					mBannerADListResponse = (BannerADListResponse)response;
-				}
-				else
-				{
-					mBannerADListResponse = null;
-					showToast(response.error);
-				}
-				ensureAdvertisementPager();
-			}
-
-			@Override
-			public void onRequestError(int requestCode, long taskId, ErrorInfo error)
-			{
-				showToast("网络错误: " + error.errorCode);
-				mBannerADListResponse = null;
-				ensureAdvertisementPager();
-			}
-		});
-	}
+//	private void loadBannerADList()
+//	{
+//		RequestManager.loadBannerADList(getContext(), new RequestCallback()
+//		{
+//			@Override
+//			public void onRequestResult(int requestCode, long taskId, BaseResponse response, DataFrom from)
+//			{
+//
+//				if (response.code == BaseResponse.RESULT_OK)
+//				{
+//					mBannerADListResponse = (BannerADListResponse)response;
+//				}
+//				else
+//				{
+//					mBannerADListResponse = null;
+//					showToast(response.error);
+//				}
+//				ensureAdvertisementPager();
+//			}
+//
+//			@Override
+//			public void onRequestError(int requestCode, long taskId, ErrorInfo error)
+//			{
+//				showToast("网络错误: " + error.errorCode);
+//				mBannerADListResponse = null;
+//				ensureAdvertisementPager();
+//			}
+//		});
+//	}
 
 	private void ensureAdvertisementPager()
 	{
 		mPagerAdapter.clear();
 		int length = 0;
-		if (mShopLogoAndADResponse != null && mShopLogoAndADResponse.datas != null
-				&& mShopLogoAndADResponse.datas.list != null && mShopLogoAndADResponse.datas.list.ads != null)
-		{
-			if (!TextUtils.isEmpty(mShopLogoAndADResponse.datas.list.goodsid))
-				if (mShopLogoAndADResponse.datas.list.shopsee == 1)
-					mPagerAdapter.addItem(new AdvertisementPagerAdapterItem(mShopLogoAndADResponse.datas.list.ads,
-							mShopLogoAndADResponse.datas.list.goodsid, mShopLogoAndADResponse.datas.list.tag, true));
-				else
-					mPagerAdapter.addItem(new AdvertisementPagerAdapterItem(mShopLogoAndADResponse.datas.list.ads,
-							mShopLogoAndADResponse.datas.list.goodsid, mShopLogoAndADResponse.datas.list.tag, false));
-			else
-				mPagerAdapter.addItem(new AdvertisementPagerAdapterItem(mShopLogoAndADResponse.datas.list.ads,
-						mShopLogoAndADResponse.datas.list.link));
-			length++;
-		}
-		if (mBannerADListResponse != null && mBannerADListResponse.datas != null
-				&& mBannerADListResponse.datas.list != null && mBannerADListResponse.datas.list.length > 0)
-		{
-			for (BannerADItem item : mBannerADListResponse.datas.list)
-			{
-				if (!TextUtils.isEmpty(item.goodsid))
-					if (item.shopsee == 1)
-						mPagerAdapter.addItem(new AdvertisementPagerAdapterItem(item.thumb, item.goodsid, item.tag,
-								true));
-					else
-						mPagerAdapter.addItem(new AdvertisementPagerAdapterItem(item.thumb, item.goodsid, item.tag,
-								false));
-				else
-					mPagerAdapter.addItem(new AdvertisementPagerAdapterItem(item.thumb, item.link));
+//		String json="[{ \"id\": 0, \"name\": \"用户广告\", \"thumb\": \"http://images.i888vip.com/WZ38S4xC9cw9x83rtZRe747eE48U3z.jpg\", \"goods_id\": \"\", \"displayorder\": 0 }, { \"id\": 14, \"name\": \"十箭十心\", \"thumb\": \"http://images.i888vip.com/F17B3KCM2CkF17AUXxIM1UZcamkiA1.jpg\", \"goods_id\": \"2191\", \"displayorder\": 9, \"link\": \"https://api.i888vip.com/goods/detail?id=2191\", \"gcate\": 1, \"customization\": 0 },{ \"id\": 7, \"name\": \"双面戴\", \"thumb\": \"http://images.i888vip.com/F94K94t94m9oW45mtt99BKTVT3HhZK.jpg\", \"goods_id\": \"2699\", \"displayorder\": 0, \"link\": \"https://api.i888vip.com/goods/detail?id=2699\", \"gcate\": 1, \"customization\": 0 },{ \"id\": 15, \"name\": \"十二星座\", \"thumb\": \"http://images.i888vip.com/VoA0kd0SD4sBA07spC2KK0M72k0k20.jpg\", \"goods_id\": \"2716\", \"displayorder\": 0, \"link\": \"https://api.i888vip.com/goods/detail?id=2716\", \"gcate\": 1, \"customization\": 0 }]".replaceAll("\"","\'");
+//		GsonBuilder gb = new GsonBuilder();
+//		Gson gson = gb.create();
+////		mShopLogoAndADResponse=gson.fromJson(json,ShopLogoAndADResponse.class);
+//		JsonParser jsonParser=new JsonParser();
+//		ArrayList<ShopLogoAndADResponse> beans=new ArrayList<>();
+//		JsonArray jsonArray = jsonParser.parse(json).getAsJsonArray();
+//		for (JsonElement user : jsonArray) {
+//			//使用GSON，直接转成Bean对象
+//			ShopLogoAndADResponse shopLogoAndADResponse = gson.fromJson(user, ShopLogoAndADResponse.class);
+//			beans.add(shopLogoAndADResponse);
+//		}
+//		if (mShopLogoAndADResponse != null && mShopLogoAndADResponse.data != null
+//				 && jsonArray.get(i).thumb != null) {
+			for (int i=0;i<jsonArray.size();i++) {
+//				if (!TextUtils.isEmpty(beans.get(i).goodsid)) {
+//				if (!mShopLogoAndADResponse.data.goodsid.equals("0"))
+//					mPagerAdapter.addItem(new AdvertisementPagerAdapterItem(mShopLogoAndADResponse.data.,
+//							mShopLogoAndADResponse.data.goodsid, mShopLogoAndADResponse.data.tag, true,mShopLogoAndADResponse.data.link));
+//				else
+
+					ImageInfo imageInfo = new ImageInfo();
+					imageInfo.url =beans.get(i).thumb;
+					if(beans.get(i).goodsid!=null){
+						mPagerAdapter.addItem(new AdvertisementPagerAdapterItem(imageInfo,
+								beans.get(i).goodsid, beans.get(i).gcate, beans.get(i).customization,beans.get(i).link));
+					}else{
+						mPagerAdapter.addItem(new AdvertisementPagerAdapterItem(imageInfo,
+								beans.get(i).goodsid, beans.get(i).gcate, beans.get(i).customization));
+					}
+
+
 				length++;
 			}
-		}
+//		}
+
+//		if (mBannerADListResponse != null && mBannerADListResponse.data!= null
+//				 && mBannerADListResponse.data.list.length > 0)
+//		{
+//			for (BannerADItem item : mBannerADListResponse.data.list)
+//			{
+//				if (!TextUtils.isEmpty(item.goodsid)) {
+////					if (item.shopsee == 1)
+//					ImageInfo imageInfo = new ImageInfo();
+//					imageInfo.url = mShopLogoAndADResponse.data.thumb;
+//					mPagerAdapter.addItem(new AdvertisementPagerAdapterItem(imageInfo,
+//							mShopLogoAndADResponse.data.goodsid, mShopLogoAndADResponse.data.gcate, mShopLogoAndADResponse.data.customization));
+////					else
+////						mPagerAdapter.addItem(new AdvertisementPagerAdapterItem(item.thumb, item.goodsid, item.tag,
+////								false));
+//				}else {
+//					ImageInfo imageInfo = new ImageInfo();
+//					imageInfo.url = mShopLogoAndADResponse.data.thumb;
+//					mPagerAdapter.addItem(new AdvertisementPagerAdapterItem(imageInfo, item.link));
+//				}
+//				length++;
+//			}
+//		}
 		ensureDots(length);
 	}
 
@@ -334,6 +427,9 @@ public class MainIndexFragment extends BaseFragment
 		private String mTag;
 		private String mLink;
 		private boolean mIsShop;
+		private String murl;
+		private int mGcate;
+		private int mCustomization;
 
 		public AdvertisementPagerAdapterItem(ImageInfo imageInfo, String goodsId, String tag, boolean isShop)
 		{
@@ -341,7 +437,25 @@ public class MainIndexFragment extends BaseFragment
 			mGoodsId = goodsId;
 			mTag = tag;
 			mIsShop = isShop;
+
 		}
+		public AdvertisementPagerAdapterItem(ImageInfo imageInfo,String goodsId,int gcate,int customization){
+			mImageInfo=imageInfo;
+			mGoodsId=goodsId;
+			mGcate=gcate;
+			mCustomization=customization;
+
+		}
+
+		public AdvertisementPagerAdapterItem(ImageInfo imageInfo,String goodsId,int gcate,int customization,String url){
+			mImageInfo=imageInfo;
+			mGoodsId=goodsId;
+			mGcate=gcate;
+			mCustomization=customization;
+			murl=url;
+
+		}
+
 
 		public AdvertisementPagerAdapterItem(ImageInfo imageInfo, String link)
 		{
@@ -365,30 +479,36 @@ public class MainIndexFragment extends BaseFragment
 				{
 					if (AndroidUtils.isFastClick())
 						return;
-					LogUtil.d(TAG, "onClick: " + mGoodsId + "; " + mLink);
-					if (!TextUtils.isEmpty(mGoodsId))
+					LogUtil.d(TAG, "onClick: " + mGoodsId + "; " + murl);
+					if (mGoodsId!=null)
 					{
 						// if (TextUtils.isEmpty(mTag) || mTag.equals(GoodsItem.TAG_RING))
 						// add(MainFragment.instance, MainFragment.instance.fragmentC1ID, new
 						// ProductDetailsFragment(mTag,
 						// mGoodsId, true), true);
-						MainFragment.instance.addProductDetailFragmentToCurrent(mGoodsId, mTag, mIsShop, true, false);
+						if(mGcate==1) {
+							MainFragment.instance.addProductDetailFragmentToCurrent(mGoodsId, "one", mIsShop, true, false,"http://www.i888vip.com/addons/ewei_shop/template/pad/default/shop/new-singleGoodsDetail.html?goods"+mGoodsId);
+						}else if(mGcate==2){
+							MainFragment.instance.addProductDetailFragmentToCurrent(mGoodsId, "two", mIsShop, true, false, "http://www.i888vip.com/addons/ewei_shop/template/pad/default/shop/new-doubleRingDetail.html?"+mGoodsId);
+						}else if(mGcate==3){
+							MainFragment.instance.addProductDetailFragmentToCurrent(mGoodsId, "two", mIsShop, true, false, "http://www.i888vip.com/addons/ewei_shop/template/pad/default/shop/new-specialDoubleRingDetail.html"+mGoodsId);
+						}
 						// else
 						// add(MainFragment.instance, MainFragment.instance.fragmentC1ID, new ProductDetailsFragment(
 						// 1, mGoodsId), true);
 					}
-					else if (!TextUtils.isEmpty(mLink))
-					{
-						String actualUrl = mLink;
-						if (mLink.contains("/pad/default"))
-						{
-							actualUrl = Config.BaseWebUrl + mLink.substring(mLink.indexOf("/pad/default"));
-						}
-						LogUtil.d(TAG, "openWindow: actualUrl=" + actualUrl);
-						// add(MainFragment.instance, MainFragment.instance.fragmentC1ID, new MainRecommendWebFragment(
-						// actualUrl, 1), true);
-						MainFragment.instance.addWebFragmentToCurrent(actualUrl, false);
-					}
+//					else if (!TextUtils.isEmpty(mLink))
+//					{
+//						String actualUrl = mLink;
+//						if (mLink.contains("/pad/default"))
+//						{
+//							actualUrl = Config.BaseWebUrl + mLink.substring(mLink.indexOf("/pad/default"));
+//						}
+//						LogUtil.d(TAG, "openWindow: actualUrl=" + actualUrl);
+//						// add(MainFragment.instance, MainFragment.instance.fragmentC1ID, new MainRecommendWebFragment(
+//						// actualUrl, 1), true);
+//						MainFragment.instance.addWebFragmentToCurrent(actualUrl, false);
+//					}
 				}
 			});
 			return view;

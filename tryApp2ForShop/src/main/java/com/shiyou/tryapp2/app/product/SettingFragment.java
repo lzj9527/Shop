@@ -293,12 +293,13 @@ public class SettingFragment extends BaseFragment
 			{
 				if (response.resultCode == BaseResponse.RESULT_OK)
 				{
+					String json=response.toString();
 					ShopLogoAndADResponse logoResponse = (ShopLogoAndADResponse)response;
-					if (logoResponse != null && logoResponse.datas != null && logoResponse.datas.list != null
-							&& logoResponse.datas.list.logo != null)
+					if (logoResponse != null && logoResponse!= null && logoResponse != null
+							)
 					{
-						mLogoImageView.setImageDataSource(logoResponse.datas.list.logo.url,
-								logoResponse.datas.list.logo.filemtime, DecodeMode.FIT_WIDTH);
+						mLogoImageView.setImageDataSource(logoResponse.thumb,
+								0, DecodeMode.FIT_WIDTH);
 						mLogoImageView.startImageLoad(false);
 					}
 				}

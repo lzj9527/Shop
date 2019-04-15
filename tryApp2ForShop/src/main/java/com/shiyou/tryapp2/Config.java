@@ -16,7 +16,7 @@ public class Config
 	// public static final String BaseUrl = "http://zsmt.tryapp.cn";// 正式版域名
 	public static final String BaseUrl = "http://www.zsmtvip.com";
 	public static final String BasePrefix="http://www.i888vip.com";
-	public static final String BaseInterface="http://api.i888vip.com";
+	public static final String BaseInterface="https://api.i888vip.com";
 	public static final String BaseWebUrl = "file:///android_asset";// Web页面BaseUrl
 	// public static final String BaseWebUrl = "http://weixintest.tryapp.cn/addons/ewei_shop/template";
 
@@ -32,9 +32,9 @@ public class Config
 	// 获取屏保图片
 	public static final String LoadScreenSaversUrl = BaseUrl + "/app/index.php?i=2&c=entry&do=screenList&m=test";
 	// 首页横幅广告
-	public static final String LoadBannerADListUrl = BaseUrl + "/app/index.php?i=2&c=entry&do=adlist&m=test";
+	public static final String LoadBannerADListUrl = BaseInterface+"/swipers/list";
 	// 获取门店logo、广告、屏保等
-	public static final String LoadShopLogoAndADUrl = BaseUrl + "/app/index.php?i=2&c=entry&do=piclist&m=test";// &key=99876f633abaf5e98a812abf19a0c186";
+	public static final String LoadShopLogoAndADUrl = BaseInterface+"/swipers/list";// &key=99876f633abaf5e98a812abf19a0c186";
 	// 添加购物车
 	public static final String AppendShoppingcartUrl = BaseUrl + "/app/index.php?i=2&c=entry&do=addcart&m=test";// &key=f7f53b265afd3c7dab12c3ec43366c89&id=14&erpid=14&size=30";
 	// GIA添加购物车weixintest.tryapp.cn/app/index.php?i=2&c=entry&do=addcart&m=test&key=111&id=

@@ -140,7 +140,7 @@ public class BrowseHistoryDBHelper extends BaseDBHelper
 
 	public synchronized long put(Context context, GoodsDetail item, boolean isShop)
 	{
-		if (hasRecord(context, String.valueOf(item.id)))
+ 		if (hasRecord(context, String.valueOf(item.id)))
 			return update(context, item, isShop);
 		else
 			return insert(context, item, isShop);

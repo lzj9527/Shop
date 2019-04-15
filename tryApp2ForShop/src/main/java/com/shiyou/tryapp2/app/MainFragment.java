@@ -13,6 +13,10 @@ import android.extend.widget.ExtendImageView;
 import android.extend.widget.MenuBar;
 import android.extend.widget.MenuBar.OnMenuListener;
 import android.extend.widget.MenuView;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Picture;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -232,27 +236,70 @@ public class MainFragment extends BaseFragment {
 	}
 
 	private void ensureShopLogo() {
-		RequestManager.loadShopLogoAndAD(getContext(), LoginHelper.getUserKey(getContext()), new RequestCallback() {
+//		RequestManager.loadShopLogoAndAD(getContext(), LoginHelper.getUserKey(getContext()), new RequestCallback() {
+//			@Override
+//			public void onRequestResult(int requestCode, long taskId, BaseResponse response, DataFrom from) {
+//				if (response.resultCode == BaseResponse.RESULT_OK) {
+//					mShopLogoAndADResponse = (ShopLogoAndADResponse) response;
+//					if (mShopLogoAndADResponse != null && mShopLogoAndADResponse!= null
+//							&& mShopLogoAndADResponse!= null
+//					) {
+//						mLogoImageView.setImageDataSource(mShopLogoAndADResponse.thumb,
+//								0, DecodeMode.FIT_WIDTH);
+//						mLogoImageView.startImageLoad(false);
+//						// MainActivity.instance.ensureShopLogo();
+//					}
+//				} else {
+//					showToast(response.error);`
+//				}
+//			}
+//
+//			@Override
+//			public void onRequestError(int requestCode, long taskId, ErrorInfo error) {
+//				showToast("网络错误: " + error.errorCode);
+//			}
+//		});
+		String url="https://api.i888vip.com/members/me?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLmk4ODh2aXAuY29tXC9sb2dpbiIsImlhdCI6MTU1NTI5NjgzMSwiZXhwIjoxNTU1MzA0MDMxLCJuYmYiOjE1NTUyOTY4MzEsImp0aSI6ImxJM1VZVUZRRXJBTEF3bU0iLCJzdWIiOjQ5NiwicHJ2IjoiODY2NWFlOTc3NWNmMjZmNmI4ZTQ5NmY4NmZhNTM2ZDY4ZGQ3MTgxOCJ9.ievRvuaNPDvrbiUjZzCNTBadgOP9E9cX8tnZOyvG8Vg";
+		final Request request=new Request.Builder().url(url).addHeader("accept","application/vnd.zltech.shop.v1+json").get().build();
+		final OkHttpClient okHttpClient=new OkHttpClient();
+		okHttpClient.newCall(request).enqueue(new Callback() {
 			@Override
-			public void onRequestResult(int requestCode, long taskId, BaseResponse response, DataFrom from) {
-				if (response.resultCode == BaseResponse.RESULT_OK) {
-					mShopLogoAndADResponse = (ShopLogoAndADResponse) response;
-					if (mShopLogoAndADResponse != null && mShopLogoAndADResponse.datas != null
-							&& mShopLogoAndADResponse.datas.list != null
-							&& mShopLogoAndADResponse.datas.list.logo != null) {
-						mLogoImageView.setImageDataSource(mShopLogoAndADResponse.datas.list.logo.url,
-								mShopLogoAndADResponse.datas.list.logo.filemtime, DecodeMode.FIT_WIDTH);
-						mLogoImageView.startImageLoad(false);
-						// MainActivity.instance.ensureShopLogo();
-					}
-				} else {
-					showToast(response.error);
-				}
+			public void onFailure(Call call, IOException e) {
+					showToast("没有头像");
 			}
 
 			@Override
-			public void onRequestError(int requestCode, long taskId, ErrorInfo error) {
-				showToast("网络错误: " + error.errorCode);
+			public void onResponse(Call call, Response response) throws IOException {
+				final String json=response.body().string();
+				AndroidUtils.MainHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						int start=json.indexOf("logo");
+						int end=json.lastIndexOf("}");
+						String token=Config.token;
+						String test="https://api.i888vip.com/members/me?token="+Config.token;
+						String url=json.substring(start+7,end-2);
+						mLogoImageView.setImageDataSource(url.toString(),
+								0, DecodeMode.FIT_WIDTH);
+						mLogoImageView.startImageLoad(false);
+//						Request request1=new Request.Builder().url(url).build();
+//						OkHttpClient okHttpClient1=new OkHttpClient();
+//						okHttpClient.newCall(request).enqueue(new Callback() {
+//							@Override
+//							public void onFailure(Call call, IOException e) {
+//
+//							}
+//
+//							@Override
+//							public void onResponse(Call call, Response response) throws IOException {
+//								byte[] Picture = response.body().bytes();
+//								//通过imageview，设置图片
+//                                Bitmap bitmap=BitmapFactory.decodeByteArray(Picture, 0, Picture.length);
+//								mLogoImageView.setImageBitmap(BitmapFactory.decodeByteArray(Picture, 0, Picture.length));
+//							}
+//						});
+					}
+				});
 			}
 		});
 	}

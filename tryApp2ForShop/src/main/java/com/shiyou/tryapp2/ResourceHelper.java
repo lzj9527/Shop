@@ -322,7 +322,7 @@ public class ResourceHelper
 				break;
 			case 5:
 				mDownloadStep++;
-				loadShopLogoAndAD();
+//				loadShopLogoAndAD();
 				break;
 			case 6:
 				mDownloadStep++;
@@ -934,16 +934,18 @@ public class ResourceHelper
 			void onResponseSuccess(BaseResponse response)
 			{
 				BannerADListResponse balResponse = (BannerADListResponse)response;
-				if (balResponse.datas != null && balResponse.datas.list != null && balResponse.datas.list.length > 0)
+				if (balResponse.data!= null && balResponse.data.list != null && balResponse.data.list.length > 0)
 				{
 					final List<ImageInfo> list = new ArrayList<ImageInfo>();
-					for (BannerADItem item : balResponse.datas.list)
+					for (BannerADItem item : balResponse.data.list)
 					{
 						if (item != null && item.thumb != null)
 						{
-							item.thumb.path = getGoodsImageDirectory(mContext).getAbsolutePath() + File.separator
-									+ FileUtils.getFileFullName(item.thumb.url);
-							list.add(item.thumb);
+							ImageInfo imageInfo=new ImageInfo();
+							imageInfo.path = getGoodsImageDirectory(mContext).getAbsolutePath() + File.separator
+									+ FileUtils.getFileFullName(item.thumb);
+							imageInfo.url=item.thumb;
+							list.add(imageInfo);
 						}
 					}
 					FileInfo[] fileInfos = new FileInfo[list.size()];
@@ -1008,32 +1010,33 @@ public class ResourceHelper
 			void onResponseSuccess(BaseResponse response)
 			{
 				ShopLogoAndADResponse slaResponse = (ShopLogoAndADResponse)response;
-				if (slaResponse.datas != null && slaResponse.datas.list != null)
+				if (slaResponse!= null)
 				{
 					final List<ImageInfo> list = new ArrayList<ImageInfo>();
-					if (slaResponse.datas.list.logo != null)
+					if (slaResponse.thumb != null)
 					{
-						slaResponse.datas.list.logo.path = getGoodsImageDirectory(mContext).getAbsolutePath()
-								+ File.separator + FileUtils.getFileFullName(slaResponse.datas.list.logo.url);
-						list.add(slaResponse.datas.list.logo);
+						ImageInfo imageInfo=new ImageInfo();
+						imageInfo.path= getGoodsImageDirectory(mContext).getAbsolutePath()+File.separator + FileUtils.getFileFullName(slaResponse.thumb);
+						imageInfo.url=slaResponse.thumb;
+						list.add(imageInfo);
 					}
-					if (slaResponse.datas.list.ads != null)
-					{
-						slaResponse.datas.list.ads.path = getGoodsImageDirectory(mContext).getAbsolutePath()
-								+ File.separator + FileUtils.getFileFullName(slaResponse.datas.list.ads.url);
-						list.add(slaResponse.datas.list.ads);
-					}
-					if (slaResponse.datas.list.screen != null && slaResponse.datas.list.screen.length > 0)
-					{
-						for (ImageInfo image : slaResponse.datas.list.screen)
-						{
-							if (image != null)
-							{
-								image.path = getGoodsImageDirectory(mContext).getAbsolutePath() + File.separator
-										+ FileUtils.getFileFullName(image.url);
-							}
-						}
-					}
+//					if (slaResponse.data.ads != null)
+//					{
+//						slaResponse.data.ads.path = getGoodsImageDirectory(mContext).getAbsolutePath()
+//								+ File.separator + FileUtils.getFileFullName(slaResponse.data.ads.url);
+//						list.add(slaResponse.data.ads);
+//					}
+//					if (slaResponse.data.screen != null && slaResponse.data.screen.length > 0)
+//					{
+//						for (ImageInfo image : slaResponse.data.screen)
+//						{
+//							if (image != null)
+//							{
+//								image.path = getGoodsImageDirectory(mContext).getAbsolutePath() + File.separator
+//										+ FileUtils.getFileFullName(image.url);
+//							}
+//						}
+//					}
 					FileInfo[] fileInfos = new FileInfo[list.size()];
 					fileInfos = list.toArray(fileInfos);
 					FileDownloadHelper.startMultiDownload(slaResponse, mContext, fileInfos,

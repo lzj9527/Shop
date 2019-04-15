@@ -150,6 +150,8 @@ public class RequestManager
 		int requestCode = RequestCode.product_main_recommends;
 		String url = Config.LoadBannerADListUrl;
 		BasicHttpLoadParams params = new BasicHttpLoadParams(false);
+		params.addHeader(new BasicNameValuePair("accept","application/vnd.zltech.tourist.v1+json"));
+		params.addHeader(new BasicNameValuePair("Authorization","Bearer"+Config.token));
 		return UrlLoader.getDefault().startLoad(context, url, params,
 				new MyJsonParser<BannerADListResponse>(context, requestCode, callback, BannerADListResponse.class),
 				cacheMode);
@@ -159,7 +161,7 @@ public class RequestManager
 	{
 		return loadBannerADList(context, callback, CacheMode.PERFER_MEMORY_OR_NETWORK);
 	}
-
+//
 	/**
 	 * 获取门店logo、广告、屏保等信息
 	 * */
@@ -168,8 +170,8 @@ public class RequestManager
 		int requestCode = RequestCode.store_info;
 		String url = Config.LoadShopLogoAndADUrl;
 		BasicHttpLoadParams params = new BasicHttpLoadParams(false);
-		params.addRequestParam(new BasicNameValuePair("key", userKey));
-
+//		params.addHeader(new BasicNameValuePair("Authorization","Bearer"+Config.token));
+		params.addHeader(new BasicNameValuePair("accept","application/vnd.zltech.tourist.v1+json"));
 		return UrlLoader.getDefault().startLoad(context, url, params,
 				new MyJsonParser<ShopLogoAndADResponse>(context, requestCode, callback, ShopLogoAndADResponse.class),
 				cacheMode);
@@ -358,7 +360,7 @@ public class RequestManager
 		BasicHttpLoadParams params = new BasicHttpLoadParams(false);
 //		params.addRequestParam(new BasicNameValuePair("key", userKey));
 //		params.addRequestParam(new BasicNameValuePair("id", goodsId));
-		params.addHeader(new BasicNameValuePair("Accept","application/vnd.zsmt.shop.v1+json"));
+		params.addHeader(new BasicNameValuePair("Accept","application/vnd.zltech.shop.v1+json"));
 
 		return UrlLoader.getDefault().startLoad(context, url, params,
 				new MyJsonParser<GoodsDetailResponse>(context, requestCode, callback, GoodsDetailResponse.class,goodsId),
@@ -377,12 +379,12 @@ public class RequestManager
 			CacheMode cacheMode)
 	{
 		int requestCode = RequestCode.product_info;
-		String url = Config.LoadGoodsDetailUrl;
-//		String url = "https://api.zsa888.cn/goods/detail";
+//		String url = Config.LoadGoodsDetailUrl;
+		String url = Config.BaseInterface+"/goods/detail?id="+goodsId+"&token="+Config.token;
 		BasicHttpLoadParams params = new BasicHttpLoadParams(false);
-		params.addRequestParam(new BasicNameValuePair("key", userKey));
-		params.addRequestParam(new BasicNameValuePair("id", goodsId));
-		params.addHeader(new BasicNameValuePair("Accept","application/vnd.zsmt.shop.v1+json"));
+//		params.addRequestParam(new BasicNameValuePair("key", userKey));
+//		params.addRequestParam(new BasicNameValuePair("id", goodsId));
+		params.addHeader(new BasicNameValuePair("Accept","application/vnd.zltech.shop.v1+json"));
 		return UrlLoader.getDefault().startLoad(
 				context,
 				url,
@@ -680,40 +682,41 @@ public class RequestManager
 			GsonBuilder gb = new GsonBuilder();
 			Gson gson = gb.create();
 
-			if(mid!=null){
-				Request request=new Request.Builder().url("https://api.i888vip.com/goods/detail?id="+mid+"&token="+Config.token).addHeader("accept","application/vnd.zltech.shop.v1+json").get().build();
-//        Request request=new Request.Builder().url("http://www.zsmtvip.com/app/index.php?i=2&c=entry&do=goods_detail&m=test&id=2843"+"&key=").addHeader("accept","application/vnd.zsmt.shop.v1+json").get().build();
-				OkHttpClient okHttpClient=new OkHttpClient();
-
-				okHttpClient.newCall(request).enqueue(new Callback() {
-					@Override
-					public void onFailure(Call call, IOException e) {
-
-					}
-
-					@Override
-					public void onResponse(Call call, Response response) throws IOException {
-						String json =response.body().string();
-//						int index=json.lastIndexOf("}");
-						Log.d("ProductDetailsFragment", "onResponse: json="+json);
-//						json="{\"data\":{\"id\":2780,\"ccate\":12,\"gcate\":1,\"title\":\"\\u7efd\\u653e\",\"thumb_url\":[\"http:\\/\\/images.zsa888.cn\\/zY7aq2HA4qEewz2w423jGHg7h2hDBh.jpg\",\"http:\\/\\/images.zsa888.cn\\/Dqo3kEEf8e8Hf1ejk6jFfH68Zf3eZ9.jpg\",\"http:\\/\\/images.zsa888.cn\\/R8KG8SF5kay8s92gkZ8128DkP18vK9.jpg\",\"http:\\/\\/images.zsa888.cn\\/P75P4HHepKxhUUFZ9XUo9Rux22HE4b.jpg\"],\"model_info\":null,\"ios_model_info\":null,\"sku1\":\"A1-132\",\"sku2\":\"\",\"skus\":\"\",\"mcost\":null,\"wcost\":null,\"mgold\":null,\"wgold\":null,\"goldWeight\":\"2.50\",\"customization\":1,\"tagname\":\"\\u5973\\u6212\",\"care\":{\"eighteenKPrice\":\"2000.00\",\"ptPrice\":\"2300.00\"},\"is_like\":false,\"specialProcess\":0,\"erp\":[]}}";
-						GsonBuilder gb = new GsonBuilder();
-						Gson gson = gb.create();
-						T response2 = gson.fromJson(json,mClass);
-						// if (response.resultCode == BaseResponse.RESULT_OK && mCacheMap != null)
-						// {
-						// if (!TextUtils.isEmpty(mCacheKey))
-						// {
-						// mCacheMap.put(mCacheKey, response);
-						// }
-						// }
-
-						response2.printData(TAG, 2);
-						if (mCallback != null)
-							mCallback.onRequestResult(mRequestCode, mTaskId, response2,from);
-					}
-				});
-			}else {
+//			if(mid!=null){
+//				String json2=json;
+//				Request request=new Request.Builder().url("https://api.i888vip.com/goods/detail?id="+mid+"&token="+Config.token).addHeader("accept","application/vnd.zltech.shop.v1+json").get().build();
+////        Request request=new Request.Builder().url("http://www.zsmtvip.com/app/index.php?i=2&c=entry&do=goods_detail&m=test&id=2843"+"&key=").addHeader("accept","application/vnd.zsmt.shop.v1+json").get().build();
+//				OkHttpClient okHttpClient=new OkHttpClient();
+//
+//				okHttpClient.newCall(request).enqueue(new Callback() {
+//					@Override
+//					public void onFailure(Call call, IOException e) {
+//
+//					}
+//
+//					@Override
+//					public void onResponse(Call call, Response response) throws IOException {
+//						String json =response.body().string();
+////						int index=json.lastIndexOf("}");
+//						Log.d("ProductDetailsFragment", "onResponse: json="+json);
+////						json="{\"data\":{\"id\":2780,\"ccate\":12,\"gcate\":1,\"title\":\"\\u7efd\\u653e\",\"thumb_url\":[\"http:\\/\\/images.zsa888.cn\\/zY7aq2HA4qEewz2w423jGHg7h2hDBh.jpg\",\"http:\\/\\/images.zsa888.cn\\/Dqo3kEEf8e8Hf1ejk6jFfH68Zf3eZ9.jpg\",\"http:\\/\\/images.zsa888.cn\\/R8KG8SF5kay8s92gkZ8128DkP18vK9.jpg\",\"http:\\/\\/images.zsa888.cn\\/P75P4HHepKxhUUFZ9XUo9Rux22HE4b.jpg\"],\"model_info\":null,\"ios_model_info\":null,\"sku1\":\"A1-132\",\"sku2\":\"\",\"skus\":\"\",\"mcost\":null,\"wcost\":null,\"mgold\":null,\"wgold\":null,\"goldWeight\":\"2.50\",\"customization\":1,\"tagname\":\"\\u5973\\u6212\",\"care\":{\"eighteenKPrice\":\"2000.00\",\"ptPrice\":\"2300.00\"},\"is_like\":false,\"specialProcess\":0,\"erp\":[]}}";
+//						GsonBuilder gb = new GsonBuilder();
+//						Gson gson = gb.create();
+//						T response2 = gson.fromJson(json,mClass);
+//						// if (response.resultCode == BaseResponse.RESULT_OK && mCacheMap != null)
+//						// {
+//						// if (!TextUtils.isEmpty(mCacheKey))
+//						// {
+//						// mCacheMap.put(mCacheKey, response);
+//						// }
+//						// }
+//
+//						response2.printData(TAG, 2);
+//						if (mCallback != null)
+//							mCallback.onRequestResult(mRequestCode, mTaskId, response2,from);
+//					}
+//				});
+//			}else {
 				T response = gson.fromJson(json, mClass);
 				// if (response.resultCode == BaseResponse.RESULT_OK && mCacheMap != null)
 				// {
@@ -726,7 +729,7 @@ public class RequestManager
 				response.printData(TAG, 2);
 				if (mCallback != null)
 					mCallback.onRequestResult(mRequestCode, mTaskId, response, from);
-			}
+//			}
 		}
 
 		@Override

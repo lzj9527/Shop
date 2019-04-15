@@ -6,22 +6,26 @@ import com.shiyou.tryapp2.data.ImageInfo;
 
 public class ShopLogoAndADResponse extends BaseResponse
 {
-	public ShopLogoAndADList datas;
-
-	public static class ShopLogoAndADList extends BaseData
-	{
-		public ShopLogoAndADInfo list;
-	}
-
-	public static class ShopLogoAndADInfo extends BaseData
-	{
-		public ImageInfo logo;
-		public ImageInfo ads;
+//	public ShopLogoAndADInfo data;
+//
+//	public static class ShopLogoAndADInfo extends BaseData
+//	{
+//		public ImageInfo logo;
+//		public ImageInfo ads;
+//		public String goodsid;
+//		public int shopsee;
+//		public String thumb;
+//		public String tag;
+//		public String tagname;
+//		public String link;
+//		public ImageInfo[] screen;
+		public String id;
+		public String name;
+		public String thumb;
+		public String displayorder;
 		public String goodsid;
-		public int shopsee;
-		public String tag;
-		public String tagname;
 		public String link;
-		public ImageInfo[] screen;
+		public int gcate;
+		public int customization;	//定制
 	}
-}
+//}

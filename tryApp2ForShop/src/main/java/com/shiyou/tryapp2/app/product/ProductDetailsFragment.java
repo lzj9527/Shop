@@ -37,6 +37,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.shiyou.tryapp2.Config;
 import com.shiyou.tryapp2.Define;
@@ -64,6 +65,7 @@ public class ProductDetailsFragment extends BaseFragment implements OnModelLoadL
 	private String goodsId;
 	// private String jiaJson;
 	private String tag = Define.TAG_RING;
+	private int gcate;
 	private boolean isShop;
 	private int type;
 	private boolean hasModelInfo;
@@ -83,6 +85,8 @@ public class ProductDetailsFragment extends BaseFragment implements OnModelLoadL
 	ImageView mUnityViewConver;
 	LinearLayout photo_show;
     View product_details_tryon;
+    RelativeLayout product_3d;
+
 
 	private boolean m3DShow = false;
 	MenuBar product_details_3d;
@@ -319,6 +323,7 @@ public class ProductDetailsFragment extends BaseFragment implements OnModelLoadL
 
 		fragmentC6ID = ResourceUtil.getId(getContext(), "fragment_container6");
 		fragmentC6 = mProductDetails.findViewById(fragmentC6ID);
+
 
 
         Log.d(TAG, "onCreateView: mDetailRight="+mDetailRightLayout);
@@ -562,6 +567,9 @@ public class ProductDetailsFragment extends BaseFragment implements OnModelLoadL
 
 		id = ResourceUtil.getId(getContext(), "unity_container");
 		unity_container = (FrameLayout)mDetailMiddleLayout.findViewById(id);
+
+		id=ResourceUtil.getId(getContext(),"product_3d");
+		product_3d= (RelativeLayout) mDetailMiddleLayout.findViewById(id);
 
 		mUnityViewConver = new ImageView(getContext());
 		mUnityViewConver.setBackgroundColor(0xffffffff);
@@ -841,7 +849,8 @@ public class ProductDetailsFragment extends BaseFragment implements OnModelLoadL
 		{
 			mUnityViewConver.setVisibility(View.VISIBLE);
 			MainActivity.instance.detachUnityPlayer();
-			unity_container.removeAllViews();
+//			product_3d.removeView(unity_container);
+			unity_container.removeView(MainActivity.instance.mUnityPlayer);
 			unity_container.addView(MainActivity.instance.mUnityPlayer, 0);
 			MainActivity.instance.mUnityPlayer.setVisibility(View.VISIBLE);
 			MainActivity.instance.mUnityPlayer.resume();
