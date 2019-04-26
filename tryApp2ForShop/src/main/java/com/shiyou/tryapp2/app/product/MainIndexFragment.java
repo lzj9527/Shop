@@ -232,7 +232,7 @@ public class MainIndexFragment extends BaseFragment
 //				loadBannerADList();
 //			}
 //		});
-		final Request request=new Request.Builder().url(Config.LoadShopLogoAndADUrl).addHeader("Authorization","Bearer"+Config.token).addHeader("accept","application/vnd.zltech.shop.v1+json").get().build();
+		final Request request=new Request.Builder().url(Config.LoadShopLogoAndADUrl).addHeader("Authorization","Bearer "+Config.token).addHeader("accept","application/vnd.zltech.shop.v1+json").get().build();
 		OkHttpClient okHttpClient=new OkHttpClient();
 		okHttpClient.newCall(request).enqueue(new Callback() {
 			@Override
@@ -245,8 +245,11 @@ public class MainIndexFragment extends BaseFragment
 			@Override
 			public void onResponse(Call call, Response response) throws IOException {
 //					String json=response.body().string().replaceAll("\"","\'");
-					String json="[ { \"id\": 0, \"name\": \"用户广告\", \"thumb\": \"http://images.i888vip.com/WZ38S4xC9cw9x83rtZRe747eE48U3z.jpg\", \"goodsid\": \"\", \"displayorder\": 0 }, { \"id\": 14, \"name\": \"十箭十心\", \"thumb\": \"http://images.i888vip.com/F17B3KCM2CkF17AUXxIM1UZcamkiA1.jpg\", \"goodsid\": \"2189\", \"displayorder\": 9, \"link\": \"https://api.i888vip.com/goods/detail?id=2189\", \"gcate\": 1, \"customization\": 0 }, { \"id\": 7, \"name\": \"双面戴\", \"thumb\": \"http://images.i888vip.com/F94K94t94m9oW45mtt99BKTVT3HhZK.jpg\", \"goodsid\": \"2699\", \"displayorder\": 0, \"link\": \"https://api.i888vip.com/goods/detail?id=2699\", \"gcate\": 1, \"customization\": 0 }, { \"id\": 15, \"name\": \"十二星座\", \"thumb\": \"http://images.i888vip.com/VoA0kd0SD4sBA07spC2KK0M72k0k20.jpg\", \"goodsid\": \"2716\", \"displayorder\": 0, \"link\": \"https://api.i888vip.com/goods/detail?id=2716\", \"gcate\": 1, \"customization\": 0 } ]".replaceAll("\"","\'");
-
+				String json=response.body().string().replace("\\/","/");
+//					String json="[{'id':0,'name':'\\u7528\\u6237\\u5e7f\\u544a','thumb':'http:\\/\\/images.i888vip.com\\/WZ38S4xC9cw9x83rtZRe747eE48U3z.jpg','goodsid':'','displayorder':0},{'id':14,'name':'\\u5341\\u7bad\\u5341\\u5fc3','thumb':'http:\\/\\/images.i888vip.com\\/F17B3KCM2CkF17AUXxIM1UZcamkiA1.jpg','goodsid':'2189','displayorder':9,'link':'https:\\/\\/api.i888vip.com\\/goods\\/detail?id=2189','gcate':1,'customization':0},{'id':7,'name':'\\u53cc\\u9762\\u6234','thumb':'http:\\/\\/images.i888vip.com\\/F94K94t94m9oW45mtt99BKTVT3HhZK.jpg','goodsid':'2699','displayorder':0,'link':'https:\\/\\/api.i888vip.com\\/goods\\/detail?id=2699','gcate':1,'customization':0},{'id':15,'name':'\\u5341\\u4e8c\\u661f\\u5ea7','thumb':'http:\\/\\/images.i888vip.com\\/VoA0kd0SD4sBA07spC2KK0M72k0k20.jpg','goodsid':'2716','displayorder':0,'link':'https:\\/\\/api.i888vip.com\\/goods\\/detail?id=2716','gcate':1,'customization':0}]".replaceAll("\"","\'");
+//				if(json.equals(json2)){
+//					showToast("nb");
+//				}
 				GsonBuilder gb = new GsonBuilder();
 				Gson gson = gb.create();
 //		mShopLogoAndADResponse=gson.fromJson(json,ShopLogoAndADResponse.class);
@@ -487,11 +490,11 @@ public class MainIndexFragment extends BaseFragment
 						// ProductDetailsFragment(mTag,
 						// mGoodsId, true), true);
 						if(mGcate==1) {
-							MainFragment.instance.addProductDetailFragmentToCurrent(mGoodsId, "one", mIsShop, true, false,"http://www.i888vip.com/addons/ewei_shop/template/pad/default/shop/new-singleGoodsDetail.html?goods"+mGoodsId);
+							MainFragment.instance.addProductDetailFragmentToCurrent(mGoodsId, "one", mIsShop, true, false,"http://www.i888vip.com/addons/ewei_shop/template/pad/default/shop/new-singleGoodsDetail.html?goodsId="+mGoodsId);
 						}else if(mGcate==2){
-							MainFragment.instance.addProductDetailFragmentToCurrent(mGoodsId, "two", mIsShop, true, false, "http://www.i888vip.com/addons/ewei_shop/template/pad/default/shop/new-doubleRingDetail.html?"+mGoodsId);
+							MainFragment.instance.addProductDetailFragmentToCurrent(mGoodsId, "two", mIsShop, true, false, "http://www.i888vip.com/addons/ewei_shop/template/pad/default/shop/new-doubleRingDetail.html?goodsId="+mGoodsId);
 						}else if(mGcate==3){
-							MainFragment.instance.addProductDetailFragmentToCurrent(mGoodsId, "two", mIsShop, true, false, "http://www.i888vip.com/addons/ewei_shop/template/pad/default/shop/new-specialDoubleRingDetail.html"+mGoodsId);
+							MainFragment.instance.addProductDetailFragmentToCurrent(mGoodsId, "two", mIsShop, true, false, "http://www.i888vip.com/addons/ewei_shop/template/pad/default/shop/new-specialDoubleRingDetail.html?goodsId="+mGoodsId);
 						}
 						// else
 						// add(MainFragment.instance, MainFragment.instance.fragmentC1ID, new ProductDetailsFragment(

@@ -238,10 +238,10 @@ public class LoginFragment extends BaseFragment
 											if (response != null && response.resultCode == BaseResponse.RESULT_OK)
 											{
 												GoodsListResponse glResponse = (GoodsListResponse)response;
-												if (glResponse.datas != null && glResponse.datas.list != null
-														&& glResponse.datas.list.length > 0)
+												if (glResponse.data != null && glResponse.data.list != null
+														&& glResponse.data.list.length > 0)
 												{
-													for (GoodsItem item : glResponse.datas.list)
+													for (GoodsItem item : glResponse.data.list)
 													{
 														if (item.tag.equals(Define.TAG_RING) && item.model_info != null)
 														{
@@ -296,7 +296,7 @@ public class LoginFragment extends BaseFragment
 
 
 		FormBody formBody=new FormBody.Builder().add("username",LoginHelper.getUserName(getContext())).add("password",LoginHelper.getUserPassword(getContext())).build();
-		Request request=new Request.Builder().url("https://api.zsa888.cn/login").addHeader("Accept","application/vnd.zsmt.shop.v1+json").post(formBody).build();
+		Request request=new Request.Builder().url("https://api.i888vip.com/login").addHeader("Accept","application/vnd.zltech.shop.v1+json").post(formBody).build();
 		OkHttpClient okHttpClient=new OkHttpClient();
 		okHttpClient.newCall(request).enqueue(new Callback() {
 			private String token;

@@ -25,7 +25,7 @@ public class Config
 	public static final String LoadGoodsCategorysUrl = BaseUrl + "/app/index.php?i=2&c=entry&do=goods_cate&m=test";
 	// http://weixintest.tryapp.cn/app/index.php?i=2&c=entry&do=goods_list&m=test&page=1&psize=10
 	public static final String LoadGoodsTagsUrl = BaseUrl + "/app/index.php?i=2&c=entry&do=taglist&m=test";
-	public static final String LoadGoodsListUrl = BaseUrl + "/app/index.php?i=2&c=entry&do=goods_list&m=test";
+	public static final String LoadGoodsListUrl = BaseInterface + "/goods/list";
 	public static final String SearchGoodsListUrl = BaseUrl + "/app/index.php?i=2&c=entry&do=searchList&m=test";// &keyword=%E5%A5%B3%E6%88%92";
 	public static final String LoadGoodsDetailUrl = BaseUrl + "/app/index.php?i=2&c=entry&do=goods_detail&m=test";// &id=14";
 	public static final String LoadGoodsErpUrl = BaseUrl + "/app/index.php?i=2&c=entry&do=goods_erp&m=test";// &id=5&key=99876f633abaf5e98a812abf19a0c186";

@@ -733,19 +733,26 @@ public class ProductDetailsFragment extends BaseFragment implements OnModelLoadL
 		id = ResourceUtil.getId(getContext(), "select_item2");
 		mViewPager2 = (ViewPager)mDetailMiddleLayout.findViewById(id);
 		mViewPager2.setOffscreenPageLimit(3);
-		mViewPager2.setPageMargin(20);
+//		mViewPager2.setPageMargin(100);
 		photo_show.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				return mViewPager2.dispatchTouchEvent(event);
 			}
 		});
+
 		mPagerAdapter = new BasePagerAdapter<AbsAdapterItem>();
 		mPagerAdapter2=new BasePagerAdapter<AbsAdapterItem>();
 		mViewPager.setAdapter(mPagerAdapter);
 		mViewPager2.setAdapter(mPagerAdapter2);
 		mViewPager.addOnPageChangeListener(mPageChangeListener);
 		mViewPager2.addOnPageChangeListener(mPageChangeListener);
+//		for(int i=0;i<mPagerAdapter2.getCount();i++){
+//			LayoutParams layoutParams=mPagerAdapter2.getItemView(i).getLayoutParams();
+//			layoutParams.width=100;
+//			mPagerAdapter2.getItemView(i).setLayoutParams(layoutParams);
+//			mPagerAdapter2.instantiateItem(mPagerAdapter2.getItemView(i),i);
+//		}
 		mViewPager.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener()
 		{
 			@Override
@@ -768,16 +775,21 @@ public class ProductDetailsFragment extends BaseFragment implements OnModelLoadL
 			@Override
 			public void onGlobalLayout()
 			{
-				int width = 500;
+				int width = 450;
 				int height = mViewPager2.getHeight();
 				if (width == 0 || height == 0)
 					return;
 				LogUtil.v(TAG, "mViewPager size: " + width + "x" + height);
-				mViewPager2.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//				mViewPager2.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 				LayoutParams params = mViewPager2.getLayoutParams();
 				params.width = width;
 				params.height = height;
+				mViewPager2.setPageMargin(20);
+//				LayoutParams params1=photo_show.getLayoutParams();
+//				params1.width = width;
+//				params1.height = height;
 				mViewPager2.setLayoutParams(params);
+//				photo_show.setLayoutParams(params1);
 			}
 		});
 
@@ -850,7 +862,10 @@ public class ProductDetailsFragment extends BaseFragment implements OnModelLoadL
 			mUnityViewConver.setVisibility(View.VISIBLE);
 			MainActivity.instance.detachUnityPlayer();
 //			product_3d.removeView(unity_container);
+			product_3d.removeView(unity_container);
+//			unity_container.removeView(unity_container);
 			unity_container.removeView(MainActivity.instance.mUnityPlayer);
+			unity_container.removeAllViews();
 			unity_container.addView(MainActivity.instance.mUnityPlayer, 0);
 			MainActivity.instance.mUnityPlayer.setVisibility(View.VISIBLE);
 			MainActivity.instance.mUnityPlayer.resume();
@@ -1115,6 +1130,7 @@ public class ProductDetailsFragment extends BaseFragment implements OnModelLoadL
 
 	private void loadCoupleStartFrom(com.shiyou.tryapp2.data.response.CoupleRingDetailResponse.GoodsDetail datas)
 	{
+
 		if (datas.model_infos == null)
 		{
 //			showToast("没有模型");
@@ -1123,6 +1139,11 @@ public class ProductDetailsFragment extends BaseFragment implements OnModelLoadL
 			product_photo.setVisibility(View.VISIBLE);
 			photo_show.setVisibility(View.GONE);
 			hideLoadingIndicator();
+			if(datas.customization==1){
+				product_photo.setVisibility(View.GONE);
+				photo_show.setVisibility(View.VISIBLE);
+				product_details_3d.setVisibility(View.VISIBLE);
+			}
 			return;
 		}
 		else
@@ -1167,6 +1188,7 @@ public class ProductDetailsFragment extends BaseFragment implements OnModelLoadL
 			}
 			startModelDownload(models);
 		}
+
 	}
 
 	private void loadStartFrom(GoodsDetail detail)
@@ -1180,6 +1202,12 @@ public class ProductDetailsFragment extends BaseFragment implements OnModelLoadL
             product_photo.setVisibility(View.VISIBLE);
             photo_show.setVisibility(View.GONE);
 			hideLoadingIndicator();
+			if(detail .customization==1){
+				product_details_tryon.setVisibility(View.VISIBLE);
+				product_photo.setVisibility(View.GONE);
+				photo_show.setVisibility(View.VISIBLE);
+				product_details_3d.setVisibility(View.VISIBLE);
+			}
 			return;
 		}
 		detail.model_info2=new FileInfo();

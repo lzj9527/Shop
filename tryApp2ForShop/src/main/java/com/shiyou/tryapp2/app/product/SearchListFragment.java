@@ -106,8 +106,8 @@ public class SearchListFragment extends BaseFragment
 						if (response.resultCode == BaseResponse.RESULT_OK)
 						{
 							final GoodsListResponse mGoodsListResponse = (GoodsListResponse)response;
-							if (mGoodsListResponse.datas != null && mGoodsListResponse.datas.list != null
-									&& mGoodsListResponse.datas.list.length > 0)
+							if (mGoodsListResponse.data != null && mGoodsListResponse.data.list != null
+									&& mGoodsListResponse.data.list.length > 0)
 							{
 								AndroidUtils.MainHandler.post(new Runnable()
 								{
@@ -115,7 +115,7 @@ public class SearchListFragment extends BaseFragment
 									public void run()
 									{
 										int count = 0;
-										for (final GoodsItem mGoodsItem : mGoodsListResponse.datas.list)
+										for (final GoodsItem mGoodsItem : mGoodsListResponse.data.list)
 										{
 											AndroidUtils.MainHandler.postDelayed(new Runnable()
 											{

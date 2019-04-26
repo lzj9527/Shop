@@ -340,11 +340,11 @@ public class ResourceHelper2
 				if (response.resultCode == BaseResponse.RESULT_OK)
 				{
 					GoodsListResponse glResponse = (GoodsListResponse)response;
-					if (glResponse.datas != null && glResponse.datas.list != null)
+					if (glResponse.data != null && glResponse.data.list != null)
 					{
 						if (mCanceled)
 							return;
-						AndroidUtils.MainHandler.post(new checkAndDownloadModelFileRunnable(glResponse.datas.list));
+						AndroidUtils.MainHandler.post(new checkAndDownloadModelFileRunnable(glResponse.data.list));
 					}
 					else
 					{

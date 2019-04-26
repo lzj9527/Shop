@@ -580,10 +580,10 @@ public class WebViewFragment extends SwipeRefreshWebViewFragment
 								if (response != null && response.resultCode == BaseResponse.RESULT_OK)
 								{
 									GoodsListResponse glResponse = (GoodsListResponse)response;
-									if (glResponse.datas != null && glResponse.datas.list != null
-											&& glResponse.datas.list.length > 0)
+									if (glResponse.data != null && glResponse.data.list != null
+											&& glResponse.data.list.length > 0)
 									{
-										for (GoodsItem item : glResponse.datas.list)
+										for (GoodsItem item : glResponse.data.list)
 										{
 											if (item.tag.equals(Define.TAG_RING))
 											{

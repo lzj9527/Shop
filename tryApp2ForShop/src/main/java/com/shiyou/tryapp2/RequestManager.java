@@ -239,33 +239,34 @@ public class RequestManager
 		String url = Config.LoadGoodsListUrl;
 
 		BasicHttpLoadParams params = new BasicHttpLoadParams(false);
-		params.addRequestParam(new BasicNameValuePair("key", userKey));
+//		params.addRequestParam(new BasicNameValuePair("key", userKey));
 		params.addHeader(new BasicNameValuePair("Accept","application/vnd.zltech.shop.v1+json"));
-		if (isShop)
-			params.addRequestParam(new BasicNameValuePair("shopsee", "" + 1));
-		if (!TextUtils.isEmpty(ccate))
-			params.addRequestParam(new BasicNameValuePair("ccate", ccate));
-		if (tagIds != null && tagIds.length > 0)
-		{
-			StringBuffer sb = new StringBuffer();
-			for (int i = 0; i < tagIds.length; i++)
-			{
-				if (i > 0)
-					sb.append(',');
-				sb.append(tagIds[i]);
-			}
-			params.addRequestParam(new BasicNameValuePair("tags", sb.toString()));
-		}
-		if (weightRange != null && weightRange.length > 1)
-		{
-			params.addRequestParam(new BasicNameValuePair("weight_f", weightRange[0] + "-" + weightRange[1]));
-		}
-		if (priceRange != null && priceRange.length > 1)
-		{
-			params.addRequestParam(new BasicNameValuePair("price", priceRange[0] + "-" + priceRange[1]));
-		}
-		params.addRequestParam(new BasicNameValuePair("page", "" + page));
-		params.addRequestParam(new BasicNameValuePair("psize", "" + pageSize));
+		params.addHeader(new BasicNameValuePair("Authorization","Bearer "+Config.token));
+//		if (isShop)
+//			params.addRequestParam(new BasicNameValuePair("shopsee", "" + 1));
+//		if (!TextUtils.isEmpty(ccate))
+//			params.addRequestParam(new BasicNameValuePair("ccate", ccate));
+//		if (tagIds != null && tagIds.length > 0)
+//		{
+//			StringBuffer sb = new StringBuffer();
+//			for (int i = 0; i < tagIds.length; i++)
+//			{
+//				if (i > 0)
+//					sb.append(',');
+//				sb.append(tagIds[i]);
+//			}
+//			params.addRequestParam(new BasicNameValuePair("tags", sb.toString()));
+//		}
+//		if (weightRange != null && weightRange.length > 1)
+//		{
+//			params.addRequestParam(new BasicNameValuePair("weight_f", weightRange[0] + "-" + weightRange[1]));
+//		}
+//		if (priceRange != null && priceRange.length > 1)
+//		{
+//			params.addRequestParam(new BasicNameValuePair("price", priceRange[0] + "-" + priceRange[1]));
+//		}
+//		params.addRequestParam(new BasicNameValuePair("page", "" + page));
+//		params.addRequestParam(new BasicNameValuePair("psize", "" + pageSize));
 
 		return UrlLoader.getDefault()
 				.startLoad(context, url, params,

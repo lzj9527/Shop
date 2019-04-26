@@ -351,9 +351,9 @@ public class ResourceHelper
 			void onResponseSuccess(BaseResponse response)
 			{
 				GoodsListResponse glResponse = (GoodsListResponse)response;
-				if (glResponse.datas != null && glResponse.datas.list != null && glResponse.datas.list.length > 0)
+				if (glResponse.data!= null && glResponse.data.list != null && glResponse.data.list.length > 0)
 				{
-					AndroidUtils.MainHandler.post(new LoadGoodsListDetailRunnable(glResponse.datas.list));
+					AndroidUtils.MainHandler.post(new LoadGoodsListDetailRunnable(glResponse.data.list));
 				}
 				else
 					startDonwloadNextResource();

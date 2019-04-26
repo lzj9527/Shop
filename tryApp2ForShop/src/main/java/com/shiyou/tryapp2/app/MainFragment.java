@@ -33,6 +33,7 @@ import android.widget.TextView;
 import com.shiyou.tryapp2.Config;
 import com.shiyou.tryapp2.RequestManager;
 import com.shiyou.tryapp2.RequestManager.RequestCallback;
+import com.shiyou.tryapp2.app.login.LoginFragment;
 import com.shiyou.tryapp2.app.login.LoginHelper;
 import com.shiyou.tryapp2.app.product.BrowseHistoryFragment;
 import com.shiyou.tryapp2.app.product.MainIndexFragment;
@@ -236,50 +237,24 @@ public class MainFragment extends BaseFragment {
 	}
 
 	private void ensureShopLogo() {
-//		RequestManager.loadShopLogoAndAD(getContext(), LoginHelper.getUserKey(getContext()), new RequestCallback() {
-//			@Override
-//			public void onRequestResult(int requestCode, long taskId, BaseResponse response, DataFrom from) {
-//				if (response.resultCode == BaseResponse.RESULT_OK) {
-//					mShopLogoAndADResponse = (ShopLogoAndADResponse) response;
-//					if (mShopLogoAndADResponse != null && mShopLogoAndADResponse!= null
-//							&& mShopLogoAndADResponse!= null
-//					) {
-//						mLogoImageView.setImageDataSource(mShopLogoAndADResponse.thumb,
-//								0, DecodeMode.FIT_WIDTH);
-//						mLogoImageView.startImageLoad(false);
-//						// MainActivity.instance.ensureShopLogo();
-//					}
-//				} else {
-//					showToast(response.error);`
-//				}
-//			}
-//
-//			@Override
-//			public void onRequestError(int requestCode, long taskId, ErrorInfo error) {
-//				showToast("网络错误: " + error.errorCode);
-//			}
-//		});
-		String url="https://api.i888vip.com/members/me?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLmk4ODh2aXAuY29tXC9sb2dpbiIsImlhdCI6MTU1NTI5NjgzMSwiZXhwIjoxNTU1MzA0MDMxLCJuYmYiOjE1NTUyOTY4MzEsImp0aSI6ImxJM1VZVUZRRXJBTEF3bU0iLCJzdWIiOjQ5NiwicHJ2IjoiODY2NWFlOTc3NWNmMjZmNmI4ZTQ5NmY4NmZhNTM2ZDY4ZGQ3MTgxOCJ9.ievRvuaNPDvrbiUjZzCNTBadgOP9E9cX8tnZOyvG8Vg";
-		final Request request=new Request.Builder().url(url).addHeader("accept","application/vnd.zltech.shop.v1+json").get().build();
-		final OkHttpClient okHttpClient=new OkHttpClient();
+		Request request=new Request.Builder().url("https://api.i888vip.com/members/me?token="+ Config.token).addHeader("accept","application/vnd.zltech.shop.v1+json").get().build();
+		OkHttpClient okHttpClient=new OkHttpClient();
 		okHttpClient.newCall(request).enqueue(new Callback() {
 			@Override
 			public void onFailure(Call call, IOException e) {
-					showToast("没有头像");
+				showToast("没有头像");
 			}
 
 			@Override
 			public void onResponse(Call call, Response response) throws IOException {
-				final String json=response.body().string();
+				final  String json=response.body().string();
 				AndroidUtils.MainHandler.post(new Runnable() {
 					@Override
 					public void run() {
 						int start=json.indexOf("logo");
 						int end=json.lastIndexOf("}");
-						String token=Config.token;
-						String test="https://api.i888vip.com/members/me?token="+Config.token;
-						String url=json.substring(start+7,end-2);
-						mLogoImageView.setImageDataSource(url.toString(),
+						String jpg=json.substring(start+7,end-2).replace("\\/","/");
+						mLogoImageView.setImageDataSource(jpg,
 								0, DecodeMode.FIT_WIDTH);
 						mLogoImageView.startImageLoad(false);
 //						Request request1=new Request.Builder().url(url).build();
@@ -302,6 +277,9 @@ public class MainFragment extends BaseFragment {
 				});
 			}
 		});
+
+
+
 	}
 
 	private void updateShoppingcartNumText(final int num) {
@@ -450,74 +428,74 @@ public class MainFragment extends BaseFragment {
 	// }
 Handler handler;
 	//获取toKen
-	public String getToken(){
-		handler=new Handler();
-
-		FormBody formBody=new FormBody.Builder().add("username",LoginHelper.getUserName(getContext())).add("password",LoginHelper.getUserPassword(getContext())).build();
-		Request request=new Request.Builder().url("https://api.i888vip.com/login").addHeader("Accept","application/vnd.zltech.shop.v1+json").post(formBody).build();
-		OkHttpClient okHttpClient=new OkHttpClient();
-		okHttpClient.newCall(request).enqueue(new Callback() {
-			private String token;
-
-			@Override
-			public void onFailure(Call call, IOException e) {
-				System.out.println(e.getMessage());
-			}
-
-			@Override
-			public void onResponse(Call call, Response response) throws IOException {
-				String all = response.body().string();
-				int i = all.indexOf("access_token");
-				int j = all.indexOf("token_type");
-				Log.d(TAG, "onResponse: all=" + all);
-				Log.d(TAG, "onResponse: i=" + i);
-				Log.d(TAG, "onResponse: j=" + j);
-				try {
-					token = all.substring(i + 15, j - 3);
-					handler.post(new Runnable() {
-						@Override
-						public void run() {
-//									int id=ResourceUtil.getId(getContext(),"test_token");
-//									WebView webView=(WebView) getView().findViewById(id);
-//									webView.loadUrl("http://www.zsa888.com/addons/ewei_shop/template/pad/default/shop/getToken.html?token="+token);
-							Config.token=token;
-//									replace(instance, new MainWebFragment("http://www.zsa888.com/addons/ewei_shop/template/pad/default/shop/getToken.html?token="+token, 0,true), false);
-
-//									Log.d(TAG, "run: textToken="+textView.getText());
-//                                	OkHttpClient okHttpClient1=new OkHttpClient();
-//									FormBody formBody=new FormBody.Builder().add("token",token).build();
-//									final Request request=new Request.Builder().url("http://www.zsa888.com/addons/ewei_shop/template/pad/default/shop/getToken.html").post(formBody).build();
-//									OkHttpClient okHttpClient=new OkHttpClient();
-//									okHttpClient.newCall(request).enqueue(new Callback() {
-//										@Override
-//										public void onFailure(Call call, IOException e) {
-//											Log.d(TAG, "onFailure: 222执行");
-//										}
+//	public String getToken(){
+//		handler=new Handler();
 //
-//										@Override
-//										public void onResponse(Call call, Response response) throws IOException {
-//											String token=response.body().string();
+//		FormBody formBody=new FormBody.Builder().add("username",LoginHelper.getUserName(getContext())).add("password",LoginHelper.getUserPassword(getContext())).build();
+//		Request request=new Request.Builder().url("https://api.i888vip.com/login").addHeader("Accept","application/vnd.zltech.shop.v1+json").post(formBody).build();
+//		OkHttpClient okHttpClient=new OkHttpClient();
+//		okHttpClient.newCall(request).enqueue(new Callback() {
+//			private String token;
 //
-//											Log.d(TAG, "onResponse: 222执行 token="+token);
-//										}
-//									});
-//                                    Log.d(TAG, "run: token222="+token);
-//									int id=ResourceUtil.getId(getContext(),"test_token");
-//									WebView webView= (WebView) getView().findViewById(id);
-//									webView.setWebViewClient(new WebViewClient());
-//									webView.evaluateJavascript("http://www.zsa888.com/addons/ewei_shop/template/pad/default/shop/getToken.html?token=" + token, new ValueCallback<String>() {
-//										@Override
-//										public void onReceiveValue(String value) {
-//											Log.d(TAG, "onReceiveValue: value="+value);
-//										}
-//									});
-						}
-					});
-				}catch (Exception e){
-
-				}
-			}
-		});
+//			@Override
+//			public void onFailure(Call call, IOException e) {
+//				System.out.println(e.getMessage());
+//			}
+//
+//			@Override
+//			public void onResponse(Call call, Response response) throws IOException {
+//				String all = response.body().string();
+//				int i = all.indexOf("access_token");
+//				int j = all.indexOf("token_type");
+//				Log.d(TAG, "onResponse: all=" + all);
+//				Log.d(TAG, "onResponse: i=" + i);
+//				Log.d(TAG, "onResponse: j=" + j);
+//				try {
+//					token = all.substring(i + 15, j - 3);
+//					handler.post(new Runnable() {
+//						@Override
+//						public void run() {
+////									int id=ResourceUtil.getId(getContext(),"test_token");
+////									WebView webView=(WebView) getView().findViewById(id);
+////									webView.loadUrl("http://www.zsa888.com/addons/ewei_shop/template/pad/default/shop/getToken.html?token="+token);
+//							Config.token=token;
+////									replace(instance, new MainWebFragment("http://www.zsa888.com/addons/ewei_shop/template/pad/default/shop/getToken.html?token="+token, 0,true), false);
+//
+////									Log.d(TAG, "run: textToken="+textView.getText());
+////                                	OkHttpClient okHttpClient1=new OkHttpClient();
+////									FormBody formBody=new FormBody.Builder().add("token",token).build();
+////									final Request request=new Request.Builder().url("http://www.zsa888.com/addons/ewei_shop/template/pad/default/shop/getToken.html").post(formBody).build();
+////									OkHttpClient okHttpClient=new OkHttpClient();
+////									okHttpClient.newCall(request).enqueue(new Callback() {
+////										@Override
+////										public void onFailure(Call call, IOException e) {
+////											Log.d(TAG, "onFailure: 222执行");
+////										}
+////
+////										@Override
+////										public void onResponse(Call call, Response response) throws IOException {
+////											String token=response.body().string();
+////
+////											Log.d(TAG, "onResponse: 222执行 token="+token);
+////										}
+////									});
+////                                    Log.d(TAG, "run: token222="+token);
+////									int id=ResourceUtil.getId(getContext(),"test_token");
+////									WebView webView= (WebView) getView().findViewById(id);
+////									webView.setWebViewClient(new WebViewClient());
+////									webView.evaluateJavascript("http://www.zsa888.com/addons/ewei_shop/template/pad/default/shop/getToken.html?token=" + token, new ValueCallback<String>() {
+////										@Override
+////										public void onReceiveValue(String value) {
+////											Log.d(TAG, "onReceiveValue: value="+value);
+////										}
+////									});
+//						}
+//					});
+//				}catch (Exception e){
+//
+//				}
+//			}
+//		});
 //			RequestManager.getToken(getContext(), LoginHelper.getUserName(getCo ntext()), LoginHelper.getUserPassword(getContext()), new RequestCallback() {
 //				@Override
 //				public void onRequestError(int requestCode, long taskId, ErrorInfo error) {
@@ -533,8 +511,8 @@ Handler handler;
 //					Log.d(TAG, "onRequestResult: token="+token);
 //				}
 //			});
-		return  Config.token;
-	}
+//		return  Config.token;
+//	}
 	String url;
     private static long lastClickTime;
 	private void setCurrentMenuImpl(final int index) {
@@ -547,12 +525,6 @@ Handler handler;
         long curClickTime = System.currentTimeMillis();
         Log.d(TAG, "run: curClickTime="+curClickTime);
         Log.d(TAG, "run: lastClickTime="+lastClickTime);
-        if ((curClickTime - lastClickTime)>=7200000) {
-            getToken();
-            Log.d(TAG, "onLoginFinished: token="+getToken());
-            lastClickTime = curClickTime;
-			Log.d(TAG, "run: 执行 LastTime="+lastClickTime);
-        }
 		AndroidUtils.MainHandler.post(new Runnable() {
 			@Override
 			public void run() {
@@ -560,6 +532,13 @@ Handler handler;
 					AndroidUtils.MainHandler.postDelayed(this, 300L);
 					return;
 				}
+				AndroidUtils.MainHandler.postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						LoginFragment loginFragment=new LoginFragment();
+						loginFragment.getToken();
+					}
+				},720000);
 
 
 				switch (index) {

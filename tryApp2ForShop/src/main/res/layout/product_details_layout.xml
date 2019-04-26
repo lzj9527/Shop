@@ -2,7 +2,7 @@
 <android.extend.widget.ExtendLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@android:color/white"
+    android:background="#80ffffff"
     android:orientation="horizontal" >
 <FrameLayout
     android:layout_width="match_parent"
@@ -10,7 +10,7 @@
     <android.extend.widget.ExtendLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@android:color/white"
+        android:background="@color/detail_edittext_hint"
         android:orientation="horizontal" >
     <include
         android:id="@+id/details_middle_layout"
@@ -18,7 +18,8 @@
         android:layout_height="fill_parent"
         android:layout_weight="7"
         layout="@layout/product_details_middle_layout"
-        android:background="@android:color/white"
+        android:background="@color/detail_edittext_hint"
+        android:layout_margin="1dp"
         android:visibility="visible" />
     <include
         android:id="@+id/details_right_layout"
@@ -26,7 +27,9 @@
         android:layout_height="fill_parent"
         android:layout_weight="3"
         layout="@layout/product_details_right_layout"
-        android:background="@android:color/white"
+        android:background="@color/detail_edittext_hint"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="3dp"
         android:visibility="visible"></include>
         <include
             android:id="@+id/couple_details_right_layout"
@@ -34,7 +37,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="3"
             layout="@layout/couple_rings_details_right_layout"
-            android:background="@android:color/white"
+            android:background="@color/detail_edittext_hint"
             android:visibility="gone"></include>
     <FrameLayout
         android:id="@+id/fragment_container6"

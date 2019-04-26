@@ -10,12 +10,13 @@ import com.shiyou.tryapp2.data.response.CoupleRingDetailResponse.ModelInfos;
 
 public class GoodsListResponse extends BaseResponse
 {
-	public GoodsList datas;
-	public PageInfo pageInfo;
+	public GoodsList data;
+
 
 	public static class GoodsList extends BaseData
 	{
 		public GoodsItem[] list;
+//		public PageInfo pageInfo;
 	}
 
 	public static class GoodsItem extends BaseData
@@ -28,6 +29,7 @@ public class GoodsListResponse extends BaseResponse
 		public String sku2;
 		public String skus;
 		public String thumb;
+		public boolean is_like;
 		public FileInfo model_info;// 模型文件
 		public ModelInfos model_infos;// 对戒模型文件
 		public String tag;// 标记，one单戒，two对戒`

@@ -29,6 +29,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.shiyou.tryapp2.Config;
 import com.shiyou.tryapp2.FileDownloadHelper;
 import com.shiyou.tryapp2.RequestManager;
 import com.shiyou.tryapp2.RequestManager.RequestCallback;
@@ -45,6 +46,14 @@ import com.shiyou.tryapp2.data.response.GetTrainLinksResponse;
 import com.shiyou.tryapp2.data.response.GetTrainLinksResponse.TrainItem;
 import com.shiyou.tryapp2.data.response.ShopLogoAndADResponse;
 import com.unity3d.player.UnityPlayer;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class SettingFragment extends BaseFragment
 {
@@ -286,35 +295,49 @@ public class SettingFragment extends BaseFragment
 
 	private void ensureShopLogo()
 	{
-		RequestManager.loadShopLogoAndAD(getContext(), LoginHelper.getUserKey(getContext()), new RequestCallback()
-		{
+		Request request=new Request.Builder().url("https://api.i888vip.com/members/me?token="+ Config.token).addHeader("accept","application/vnd.zltech.shop.v1+json").get().build();
+		OkHttpClient okHttpClient=new OkHttpClient();
+		okHttpClient.newCall(request).enqueue(new Callback() {
 			@Override
-			public void onRequestResult(int requestCode, long taskId, BaseResponse response, DataFrom from)
-			{
-				if (response.resultCode == BaseResponse.RESULT_OK)
-				{
-					String json=response.toString();
-					ShopLogoAndADResponse logoResponse = (ShopLogoAndADResponse)response;
-					if (logoResponse != null && logoResponse!= null && logoResponse != null
-							)
-					{
-						mLogoImageView.setImageDataSource(logoResponse.thumb,
-								0, DecodeMode.FIT_WIDTH);
-						mLogoImageView.startImageLoad(false);
-					}
-				}
-				else
-				{
-					showToast(response.error);
-				}
+			public void onFailure(Call call, IOException e) {
+				showToast("没有头像");
 			}
 
 			@Override
-			public void onRequestError(int requestCode, long taskId, ErrorInfo error)
-			{
-				showToast("网络错误: " + error.errorCode);
+			public void onResponse(Call call, Response response) throws IOException {
+				final  String json=response.body().string();
+				AndroidUtils.MainHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						int start=json.indexOf("logo");
+						int end=json.lastIndexOf("}");
+						String url=json.substring(start+7,end-2);
+						mLogoImageView.setImageDataSource(url,
+								0, DecodeMode.FIT_WIDTH);
+						mLogoImageView.startImageLoad(false);
+//						Request request1=new Request.Builder().url(url).build();
+//						OkHttpClient okHttpClient1=new OkHttpClient();
+//						okHttpClient.newCall(request).enqueue(new Callback() {
+//							@Override
+//							public void onFailure(Call call, IOException e) {
+//
+//							}
+//
+//							@Override
+//							public void onResponse(Call call, Response response) throws IOException {
+//								byte[] Picture = response.body().bytes();
+//								//通过imageview，设置图片
+//                                Bitmap bitmap=BitmapFactory.decodeByteArray(Picture, 0, Picture.length);
+//								mLogoImageView.setImageBitmap(BitmapFactory.decodeByteArray(Picture, 0, Picture.length));
+//							}
+//						});
+					}
+				});
 			}
 		});
+
+
+
 	}
 
 	private void ensureVersion()

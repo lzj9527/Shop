@@ -1254,7 +1254,7 @@ public class MainActivity extends BaseAppActivity
 						{
 							GoodsListResponse glResponse = (GoodsListResponse)response;
 							if (mGoodsListLayout.getVisibility() == View.VISIBLE)
-								makeGoodsList(category, glResponse.datas.list);
+								makeGoodsList(category, glResponse.data.list);
 						}
 						else
 						{

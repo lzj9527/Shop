@@ -25,8 +25,8 @@ public class CoupleRingDetailResponse extends BaseResponse
 //		public String marketprice;
 		public String tagname;// 分类标记
 		public int gcate;
-//		public String  customization;	//定制
-		public String specialProcess;	//特殊工艺对戒
+		public int  customization;	//定制
+		public int specialProcess;	//特殊工艺对戒
 		public String thumb;// 主图
  		public String[] thumb_url;
 		public ImageInfo[] thumb_url2;// 相册
@@ -74,13 +74,7 @@ public class CoupleRingDetailResponse extends BaseResponse
 			this.gcate = gcate;
 		}
 
-		public String getSpecialProcess() {
-			return specialProcess;
-		}
 
-		public void setSpecialProcess(String specialProcess) {
-			this.specialProcess = specialProcess;
-		}
 
 //		public String getThumb() {
 //			return thumb;
