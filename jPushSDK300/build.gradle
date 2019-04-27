@@ -23,4 +23,3 @@ dependencies {
     api files('libs/jcore-android_v1.0.0.jar')
     api files('libs/jpush-android_v3.0.0.jar')
 }
-1
