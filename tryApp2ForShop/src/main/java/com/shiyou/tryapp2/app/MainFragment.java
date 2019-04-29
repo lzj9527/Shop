@@ -167,18 +167,18 @@ public class MainFragment extends BaseFragment {
 
 		id = ResourceUtil.getId(getActivity(), "main_tryon");
 		mLogoImageView = (ExtendImageView) view.findViewById(id);
-		mLogoImageView.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// if (AndroidUtils.isFastClick())
-				// return;
-				// backToHomepage();
-				// if (mGoodsTag.equals(Define.TAG_RING))
-				// MainActivity.launchTryonScene(getActivity(), mGoodsId);
-				// else
-				// MainActivity.launchTryonSceneWithCoupleRing(getActivity(), mGoodsId);
-			}
-		});
+//		mLogoImageView.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				// if (AndroidUtils.isFastClick())
+//				// return;
+//				// backToHomepage();
+//				// if (mGoodsTag.equals(Define.TAG_RING))
+//				// MainActivity.launchTryonScene(getActivity(), mGoodsId);
+//				// else
+//				// MainActivity.launchTryonSceneWithCoupleRing(getActivity(), mGoodsId);
+//			}
+//		});
 		ensureShopLogo();
 
 

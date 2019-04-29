@@ -3,7 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#80ffffff"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:padding="3dp">
 <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -19,7 +20,7 @@
         android:layout_weight="7"
         layout="@layout/product_details_middle_layout"
         android:background="@color/detail_edittext_hint"
-        android:layout_margin="1dp"
+
         android:visibility="visible" />
     <include
         android:id="@+id/details_right_layout"

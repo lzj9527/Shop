@@ -147,6 +147,7 @@ public class BaseFragment extends Fragment
 	public static void replace(FragmentActivity activity, Fragment fragment, boolean addToBackStack)
 	{
 		int containerViewId = ResourceUtil.getId(activity, "fragment_container");
+
 		replace(activity, containerViewId, fragment, addToBackStack);
 	}
 

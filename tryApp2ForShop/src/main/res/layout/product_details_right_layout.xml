@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:background="@color/detail_right_background"
     android:orientation="vertical"
-    android:padding="10px" >
+    >
     <android.extend.widget.FragmentContainer
         android:id="@+id/product_details_attribute"
         android:layout_width="match_parent"
@@ -384,7 +384,6 @@
             android:id="@+id/select_layout"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10px"
             android:background="@drawable/product_details_select_item_bg" >
 
             <LinearLayout
