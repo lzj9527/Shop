@@ -14,6 +14,9 @@ import android.extend.widget.adapter.AbsAdapterItem;
 import android.extend.widget.adapter.BaseAdapter;
 import android.extend.widget.adapter.BasePagerAdapter;
 import android.extend.widget.adapter.HorizontalScrollListView;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -54,6 +57,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -67,6 +73,7 @@ public class MainIndexFragment extends BaseFragment
 
 	private ViewPager mViewPager;
 	private LinearLayout mDotContainer;
+
 	private BasePagerAdapter<AbsAdapterItem> mPagerAdapter;
 	private OnPageChangeListener mPageChangeListener = new OnPageChangeListener()
 	{
@@ -134,14 +141,9 @@ public class MainIndexFragment extends BaseFragment
 		indexProductAdapter = new BaseAdapter<AbsAdapterItem>();
 		indexProduct.setAdapter(indexProductAdapter);
 
+
 		doRefresh();
 
-		// if (GoodsId != null) {
-		// MainActivity.launchTryonScene(getActivity(), "5");
-		// BaseFragment.add(MainFragment.instance,
-		// MainFragment.instance.fragmentC1ID,
-		// new ProductDetailsFragment(0, GoodsId), true);
-		// }
 
 		return view;
 	}
@@ -182,6 +184,33 @@ public class MainIndexFragment extends BaseFragment
 	// {
 	// return mMainIndexFragment;
 	// }
+
+	public static ArrayList<Integer> getPicturePixel(Bitmap bitmap) {
+
+		int width = bitmap.getWidth();
+		int height = bitmap.getHeight();
+
+		// 保存所有的像素的数组，图片宽×高
+		int[] pixels = new int[width * height];
+
+		bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
+
+		ArrayList<Integer> rgb = new ArrayList<>();
+		for (int i = 0; i < pixels.length; i++) {
+			int clr = pixels[i];
+			int red = (clr & 0x00ff0000) >> 16; // 取高两位
+			int green = (clr & 0x0000ff00) >> 8; // 取中两位
+			int blue = clr & 0x000000ff; // 取低两位
+//            Log.d("tag", "r=" + red + ",g=" + green + ",b=" + blue);
+			int color = Color.rgb(red, green, blue);
+			//除去白色和黑色
+//            if (color != Color.WHITE && color != Color.BLACK) {
+			rgb.add(color);
+//            }
+		}
+
+		return rgb;
+	}
 
 	private void loadAdvertisements()
 	{

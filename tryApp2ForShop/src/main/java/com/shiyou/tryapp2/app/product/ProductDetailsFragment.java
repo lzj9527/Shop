@@ -74,8 +74,8 @@ public class ProductDetailsFragment extends BaseFragment implements OnModelLoadL
 
 	private View mProductDetails;
 	private View mDetailMiddleLayout;
-	 private View mDetailRightLayout;
-	 private View mCoupleRightLayout;
+	private View mDetailRightLayout;
+	private View mCoupleRightLayout;
 
 
 	View product_photo;
@@ -84,8 +84,8 @@ public class ProductDetailsFragment extends BaseFragment implements OnModelLoadL
 	FrameLayout unity_container;
 	ImageView mUnityViewConver;
 	LinearLayout photo_show;
-    View product_details_tryon;
-    RelativeLayout product_3d;
+	View product_details_tryon;
+	RelativeLayout product_3d;
 
 
 	private boolean m3DShow = false;
@@ -121,7 +121,7 @@ public class ProductDetailsFragment extends BaseFragment implements OnModelLoadL
 	// }
 
 	public ProductDetailsFragment(String tag, String goodsId, boolean isShop, boolean hasModelInfo,
-			float[] weightRange, int[] priceRange)
+								  float[] weightRange, int[] priceRange)
 	{
 		LogUtil.d(TAG, "ProductDetailsFragment: " + tag + "; " + goodsId + "; " + isShop + "; " + hasModelInfo);
 		LogUtil.v(TAG, "ProductDetailsFragment weightRange: "
@@ -168,7 +168,7 @@ public class ProductDetailsFragment extends BaseFragment implements OnModelLoadL
 		this.weightRange = weightRange;
 		this.priceRange = priceRange;
 		this.url=url;
-        Log.d(TAG, "ProductDetailsFragment: url="+url);
+		Log.d(TAG, "ProductDetailsFragment: url="+url);
 	}
 
 	public ProductDetailsFragment(String tag, String goodsId, boolean isShop, boolean hasModelInfo)
@@ -262,7 +262,7 @@ public class ProductDetailsFragment extends BaseFragment implements OnModelLoadL
 		FragmentContainer fragmentContainer= (FragmentContainer) mProductDetails.findViewById(id);
 		fragmentContainer.setVisibility(View.VISIBLE);
 		replace(getActivity(),ResourceUtil.getId(getContext(),"product_HadGia"),new MainWebFragment(url,0),false);
- 	}
+	}
 
 	private void ensureDots()
 	{
@@ -326,10 +326,10 @@ public class ProductDetailsFragment extends BaseFragment implements OnModelLoadL
 
 
 
-        Log.d(TAG, "onCreateView: mDetailRight="+mDetailRightLayout);
-        Log.d(TAG, "onCreateView: mCoupleRight="+mCoupleRightLayout);
+		Log.d(TAG, "onCreateView: mDetailRight="+mDetailRightLayout);
+		Log.d(TAG, "onCreateView: mCoupleRight="+mCoupleRightLayout);
 
-        ensureDetailsMiddle();
+		ensureDetailsMiddle();
 		ensureUnityPlayer();
 //		if (tag.equals(Define.TAG_RING))
 //			ensureDetailRight(0);
@@ -351,7 +351,7 @@ public class ProductDetailsFragment extends BaseFragment implements OnModelLoadL
 
 	private void ensureDetailRight(int index)
 	{
-        Log.d(TAG, "ensureDetailRight: 执行");
+		Log.d(TAG, "ensureDetailRight: 执行");
 		switch (index)
 		{
 			case 0:
@@ -374,8 +374,8 @@ public class ProductDetailsFragment extends BaseFragment implements OnModelLoadL
 //				mDetailRightLayout.setVisibility(View.GONE);
 //				mCoupleRightLayout.setVisibility(View.VISIBLE);
 				mShopProductDetailsFragment = new ShopProductDetailsFragment(isShop,url);
-                mCoupleRightLayout.setVisibility(View.GONE);
-                mDetailRightLayout.setVisibility(View.VISIBLE);
+				mCoupleRightLayout.setVisibility(View.GONE);
+				mDetailRightLayout.setVisibility(View.VISIBLE);
 
 				replace(ProductDetailsFragment.instance, ProductDetailsFragment.instance.fragmentC6ID,
 						mShopProductDetailsFragment, false);
@@ -921,37 +921,37 @@ public class ProductDetailsFragment extends BaseFragment implements OnModelLoadL
 //						{
 //                        try { TimeUnit.SECONDS.sleep(1000);
 //                        } catch (InterruptedException ie){}
-							mGDResponse = (GoodsDetailResponse)response;
-							if (mGDResponse != null)
+						mGDResponse = (GoodsDetailResponse)response;
+						if (mGDResponse != null)
+						{
+							BrowseHistoryDBHelper.getInstance().put(getContext(), mGDResponse.data, isShop);
+							AndroidUtils.MainHandler.post(new Runnable()
 							{
-								BrowseHistoryDBHelper.getInstance().put(getContext(), mGDResponse.data, isShop);
-								AndroidUtils.MainHandler.post(new Runnable()
+								@Override
+								public void run()
 								{
-									@Override
-									public void run()
+									if (isDetached())
+										return;
+									if (mGDResponse.data.thumb_url != null)
 									{
-										if (isDetached())
-											return;
-										if (mGDResponse.data.thumb_url != null)
-										{
-											mGDResponse.data.thumb_url2=new ImageInfo[mGDResponse.data.thumb_url.length];
-											for(int i=0;i<mGDResponse.data.thumb_url.length;i++){
-												mGDResponse.data.thumb_url2[i]=new ImageInfo();
-												mGDResponse.data.thumb_url2[i].url=mGDResponse.data.thumb_url[i];
-											}
-
-											productSelectedList(mGDResponse.data.thumb_url2);
+										mGDResponse.data.thumb_url2=new ImageInfo[mGDResponse.data.thumb_url.length];
+										for(int i=0;i<mGDResponse.data.thumb_url.length;i++){
+											mGDResponse.data.thumb_url2[i]=new ImageInfo();
+											mGDResponse.data.thumb_url2[i].url=mGDResponse.data.thumb_url[i];
 										}
+
+										productSelectedList(mGDResponse.data.thumb_url2);
+									}
 //										if (mShopProductDetailsFragment != null)
 //											mShopProductDetailsFragment.updateGoodsDetailResponse(mGDResponse,
 //													weightRange, priceRange);
-										Log.d(TAG, "run: model="+mGDResponse.data.model_info);
+									Log.d(TAG, "run: model="+mGDResponse.data.model_info);
 //										mGDResponse.data.model_info="http://www.zsmtvip.com/attachment/unity3d/2/A1-132_Android.unity3d";
-										if ( hasModelInfo)
-											loadStartFrom(mGDResponse.data);
-									}
-								});
-							}
+									if ( hasModelInfo)
+										loadStartFrom(mGDResponse.data);
+								}
+							});
+						}
 //						}
 //						else
 //						{
@@ -986,36 +986,36 @@ public class ProductDetailsFragment extends BaseFragment implements OnModelLoadL
 						hideLoadingIndicator();
 //						if (response.resultCode == BaseResponse.RESULT_OK)
 //						{
-							mCoupleRingDetailResponse = (CoupleRingDetailResponse)response;
-							BrowseHistoryDBHelper.getInstance().put(getContext(), mCoupleRingDetailResponse.data,
-									isShop);
-							if (mCoupleRingDetailResponse != null)
+						mCoupleRingDetailResponse = (CoupleRingDetailResponse)response;
+						BrowseHistoryDBHelper.getInstance().put(getContext(), mCoupleRingDetailResponse.data,
+								isShop);
+						if (mCoupleRingDetailResponse != null)
+						{
+							AndroidUtils.MainHandler.post(new Runnable()
 							{
-								AndroidUtils.MainHandler.post(new Runnable()
+								@Override
+								public void run()
 								{
-									@Override
-									public void run()
+									if (isDetached())
+										return;
+									if (mCoupleRingDetailResponse.data.thumb_url != null)
 									{
-										if (isDetached())
-											return;
-										if (mCoupleRingDetailResponse.data.thumb_url != null)
-										{
-											mCoupleRingDetailResponse.data.thumb_url2=new ImageInfo[mCoupleRingDetailResponse.data.thumb_url.length];
-											for(int i=0;i<mCoupleRingDetailResponse.data.thumb_url.length;i++){
-												mCoupleRingDetailResponse.data.thumb_url2[i]=new ImageInfo();
-												mCoupleRingDetailResponse.data.thumb_url2[i].url=mCoupleRingDetailResponse.data.thumb_url[i];
-											}
-											productSelectedList(mCoupleRingDetailResponse.data.thumb_url2);
+										mCoupleRingDetailResponse.data.thumb_url2=new ImageInfo[mCoupleRingDetailResponse.data.thumb_url.length];
+										for(int i=0;i<mCoupleRingDetailResponse.data.thumb_url.length;i++){
+											mCoupleRingDetailResponse.data.thumb_url2[i]=new ImageInfo();
+											mCoupleRingDetailResponse.data.thumb_url2[i].url=mCoupleRingDetailResponse.data.thumb_url[i];
 										}
+										productSelectedList(mCoupleRingDetailResponse.data.thumb_url2);
+									}
 //										if (mCoupleRingsDetailsFragment != null)
 //											mCoupleRingsDetailsFragment.updateCoupleRingDetailsResponse(
 //													mCoupleRingDetailResponse, weightRange, priceRange);
 //                                        mCoupleRingDetailResponse.data.model_infos= new String[]{"http://www.zsmtvip.com/attachment/unity3d/2/A1-132_Android.unity3d", "http://www.zsmtvip.com/attachment/unity3d/2/A1-132_Android.unity3d"};
-										if ( hasModelInfo)
-											loadCoupleStartFrom(mCoupleRingDetailResponse.data);
-									}
-								});
-							}
+									if ( hasModelInfo)
+										loadCoupleStartFrom(mCoupleRingDetailResponse.data);
+								}
+							});
+						}
 //						}
 //						else
 //						{
@@ -1198,9 +1198,9 @@ public class ProductDetailsFragment extends BaseFragment implements OnModelLoadL
 		{
 //			showToast("没有模型");
 			product_details_3d.setVisibility(View.GONE);
-            product_details_tryon.setVisibility(View.GONE);
-            product_photo.setVisibility(View.VISIBLE);
-            photo_show.setVisibility(View.GONE);
+			product_details_tryon.setVisibility(View.GONE);
+			product_photo.setVisibility(View.VISIBLE);
+			photo_show.setVisibility(View.GONE);
 			hideLoadingIndicator();
 			if(detail .customization==1){
 				product_details_tryon.setVisibility(View.VISIBLE);
@@ -1253,7 +1253,7 @@ public class ProductDetailsFragment extends BaseFragment implements OnModelLoadL
 		}
 
 		public void onMultiDownloadProgress(Object tag, FileInfo fileInfo, String localPath, long count, long length,
-				float speed, int downloadIndex)
+											float speed, int downloadIndex)
 		{
 		}
 

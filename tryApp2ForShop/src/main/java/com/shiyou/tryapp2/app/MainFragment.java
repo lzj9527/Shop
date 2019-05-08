@@ -13,9 +13,13 @@ import android.extend.widget.ExtendImageView;
 import android.extend.widget.MenuBar;
 import android.extend.widget.MenuBar.OnMenuListener;
 import android.extend.widget.MenuView;
+import android.extend.widget.adapter.AbsAdapterItem;
+import android.extend.widget.adapter.BaseGridAdapter;
+import android.extend.widget.adapter.ScrollGridView;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Picture;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,6 +32,8 @@ import android.view.ViewGroup;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.shiyou.tryapp2.Config;
@@ -46,6 +52,10 @@ import com.shiyou.tryapp2.data.response.ShopLogoAndADResponse;
 import com.shiyou.tryapp2.data.response.ShoppingcartListResponse;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -53,6 +63,8 @@ import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static com.shiyou.tryapp2.app.product.MainIndexFragment.getPicturePixel;
 
 
 public class MainFragment extends BaseFragment {
@@ -63,6 +75,12 @@ public class MainFragment extends BaseFragment {
 	private ExtendImageView mLogoImageView;
 	private ShopLogoAndADResponse mShopLogoAndADResponse;
 	private TextView mShoppingcartNum;
+	private ImageView mCustomized;
+	private ImageView mOther;
+	private LinearLayout mMainPage;
+
+	private LinearLayout mLogoShow;
+	private ImageView mLogo;
 
 	// private View fragmentC, fragmentC1, fragmentC2, fragmentC3;
 	// private int fragmentCID, fragmentC1ID, fragmentC2ID, fragmentC3ID;
@@ -74,7 +92,7 @@ public class MainFragment extends BaseFragment {
 	private String mGoodsId;
 	private String mGoodsTag;
 	private String token;
-
+	private BaseGridAdapter mAdapter;
 	// private boolean mGoodsIsShop;
 
 	// public MainIndexFragment mFragment1 = new MainIndexFragment();
@@ -90,6 +108,8 @@ public class MainFragment extends BaseFragment {
 		instance = this;
 	}
 
+	public MainFragment(){}
+
 	// @Override
 	// public void onCreate(Bundle savedInstanceState)
 	// {
@@ -103,6 +123,15 @@ public class MainFragment extends BaseFragment {
 
 		int id = ResourceUtil.getId(getContext(), "menubar_layout");
 		menubar_layout = view.findViewById(id);
+
+//		id = ResourceUtil.getId(getContext(), "menu_container");
+//		ScrollGridView menu_container = (ScrollGridView)view.findViewById(id);
+//		menu_container.setNumColumns(3);
+//		int space = AndroidUtils.dp2px(getContext(), 40);
+//		menu_container.setVerticalDividerWidth(space);
+//		menu_container.setHorizontalDividerHeight(space);
+//		mAdapter = new BaseGridAdapter<AbsAdapterItem>();
+//		menu_container.setAdapter(mAdapter);
 
 		// fragmentCID = ResourceUtil.getId(getContext(), "fragment_container");
 		// fragmentC = view.findViewById(fragmentCID);
@@ -119,6 +148,31 @@ public class MainFragment extends BaseFragment {
 		// add(this, fragmentC1ID, fragment1, FragmentTransaction.TRANSIT_NONE, false);
 		// add(this, fragmentC2ID, fragment2, FragmentTransaction.TRANSIT_NONE, false);
 		// add(this, fragmentC3ID, fragment3, FragmentTransaction.TRANSIT_NONE, false);
+
+		id=ResourceUtil.getId(getContext(),"mainPage");
+		mMainPage= (LinearLayout) view.findViewById(id);
+
+
+		id=ResourceUtil.getId(getContext(),"customized");
+		mCustomized= (ImageView) view.findViewById(id);
+		mCustomized.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mMainPage.setVisibility(View.GONE);
+				replace(instance, new MainIndexFragment(), false);
+			}
+		});
+
+
+		id=ResourceUtil.getId(getContext(),"other");
+		mOther= (ImageView) view.findViewById(id);
+		mOther.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mMainPage.setVisibility(View.GONE);
+				replace(instance, new OtherIndexFragment(), false);
+			}
+		});
 
 		id = ResourceUtil.getId(getContext(), "menubar");
 		mMenuBar = (MenuBar) view.findViewById(id);
@@ -141,7 +195,7 @@ public class MainFragment extends BaseFragment {
 				setCurrentMenuImpl(menuIndex);
 			}
 		});
-		mMenuBar.setCurrentMenu(0);
+		mMenuBar.setCurrentMenu(6);
 
 		id = ResourceUtil.getId(getContext(), "setting");
 		final View setting = view.findViewById(id);
@@ -165,8 +219,51 @@ public class MainFragment extends BaseFragment {
 			}
 		});
 
+
+		id=ResourceUtil.getId(getContext(),"logoShow");
+		mLogoShow= (LinearLayout) view.findViewById(id);
+
+		id=ResourceUtil.getId(getContext(),"logo");
+		mLogo= (ImageView) view.findViewById(id);
+
+		Bitmap bitmap= ((BitmapDrawable)mLogo.getDrawable()).getBitmap();
+		ArrayList<Integer> picturePixel= getPicturePixel(bitmap);
+		HashMap<Integer,Integer> color2=new HashMap<>();
+		for (Integer color:picturePixel){
+			if (color2.containsKey(color)){
+				Integer integer = color2.get(color);
+				integer++;
+				color2.remove(color);
+				color2.put(color,integer);
+
+			}else{
+				color2.put(color,1);
+			}
+		}
+		//挑选数量最多的颜色
+		Iterator iter = color2.entrySet().iterator();
+		int count=0;
+		int color=0;
+		while (iter.hasNext()) {
+			Map.Entry entry = (Map.Entry) iter.next();
+			int value = (int) entry.getValue();
+			if (count<value){
+				count=value;
+				color= (int) entry.getKey();
+			}
+
+		}
+		mLogoShow.setBackgroundColor(color);
+
 		id = ResourceUtil.getId(getActivity(), "main_tryon");
 		mLogoImageView = (ExtendImageView) view.findViewById(id);
+		mLogoImageView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mMainPage.setVisibility(View.VISIBLE);
+//				replace(instance, new MainFragment(), false);
+			}
+		});
 //		mLogoImageView.setOnClickListener(new View.OnClickListener() {
 //			@Override
 //			public void onClick(View v) {
@@ -542,21 +639,28 @@ Handler handler;
 
 
 				switch (index) {
-					case 0:// 定制
-						// fragmentC1.setVisibility(View.VISIBLE);
-						// ensureMainIndexFragment();
-						// fragment1.popBackStackInclusive();
-						replace(instance, new MainIndexFragment(), false);
+					case 0://主页
+						mMainPage.setVisibility(View.VISIBLE);
+//						replace(instance, new MainFragment(), false);
 						break;
+//					case 0:// 定制
+//						// fragmentC1.setVisibility(View.VISIBLE);
+//						// ensureMainIndexFragment();
+//						// fragment1.popBackStackInclusive();
+//						mMainPage.setVisibility(View.GONE);
+//						replace(instance, new MainIndexFragment(), false);
+//						break;
 					case 1:// 其他（配货）
 						// fragmentC2.setVisibility(View.VISIBLE);
 						// ensureOtherIndexFragment();
 						// fragment2.popBackStackInclusive();
+						mMainPage.setVisibility(View.GONE);
 						replace(instance, new OtherIndexFragment(), false);
 						break;
 					case 2:// 购物车
 //						 fragmentC.setVisibility(View.VISIBLE);
-						url = Config.WebShoppingCart + "?key=" + LoginHelper.getUserKey(getContext());
+						mMainPage.setVisibility(View.GONE);
+//						url = Config.WebShoppingCart + "?key=" + LoginHelper.getUserKey(getContext());
 
 						url=Config.BasePrefix+"/addons/ewei_shop/template/pad/default/shop/new-cart.html";
 //						url="https://www.baidu.com";
@@ -587,12 +691,14 @@ Handler handler;
 					case 3:// 订单
 						// fragmentC.setVisibility(View.VISIBLE);
 //						url = Config.WebOrder + "?key=" + LoginHelper.getUserKey(getContext());
+						mMainPage.setVisibility(View.GONE);
 						url=Config.BasePrefix+"/addons/ewei_shop/template/pad/default/shop/new-order.html";
 						replace(instance, new MainWebFragment(url, 0), false);
 						break;
 					case 4:// 收藏
 						// fragmentC3.setVisibility(View.VISIBLE);
 //						url = Config.WebSearch + "?key=" + LoginHelper.getUserKey(getContext());
+						mMainPage.setVisibility(View.GONE);
 						url=Config.BasePrefix+"/addons/ewei_shop/template/pad/default/shop/new-collection.html";
 						replace(instance, new MainWebFragment(url, 0), false);
 						// ensureSearchFragment();
@@ -600,8 +706,10 @@ Handler handler;
 						break;
 					case 5:// 足迹
 						// fragmentC.setVisibility(View.VISIBLE);
+						mMainPage.setVisibility(View.GONE);
 						replace(instance, new BrowseHistoryFragment(), false);
 						break;
+
 				}
 
 				invalidateMenuBar();

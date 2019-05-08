@@ -46,6 +46,7 @@ public class BaseFragment extends Fragment
 		// {
 		// ((BaseFragment)fragment).mAddToBackStack = addToBackStack;
 		// }
+		ft.addToBackStack(null);
 		ft.commit();
 	}
 
