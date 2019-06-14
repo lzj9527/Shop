@@ -29,8 +29,6 @@
         android:layout_weight="3"
         layout="@layout/product_details_right_layout"
         android:background="@color/detail_edittext_hint"
-        android:layout_marginLeft="3dp"
-        android:layout_marginTop="3dp"
         android:visibility="visible"></include>
         <include
             android:id="@+id/couple_details_right_layout"

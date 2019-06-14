@@ -43,6 +43,23 @@ public final class AndroidUtils
 
 	public static final Handler MainHandler = new Handler(Looper.getMainLooper());
 
+	public static int getWindowWidth(Context context){
+// 获取屏幕分辨率
+		WindowManager wm = (WindowManager) (context.getSystemService(Context.WINDOW_SERVICE));
+		DisplayMetrics dm = new DisplayMetrics();
+		wm.getDefaultDisplay().getMetrics(dm);
+		int mScreenWidth = dm.widthPixels;
+		return mScreenWidth;
+	}
+	public static int getWindowHeigh(Context context){
+// 获取屏幕分辨率
+		WindowManager wm = (WindowManager) (context.getSystemService(Context.WINDOW_SERVICE));
+		DisplayMetrics dm = new DisplayMetrics();
+		wm.getDefaultDisplay().getMetrics(dm);
+		int mScreenHeigh = dm.heightPixels;
+		return mScreenHeigh;
+	}
+
 	public static String getCpuId()
 	{
 		String cpuId = null;

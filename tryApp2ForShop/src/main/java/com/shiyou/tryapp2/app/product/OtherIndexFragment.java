@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 
@@ -53,6 +54,15 @@ public class OtherIndexFragment extends BaseFragment
 	private TextView product_all_number;
 	private EditText product_search_number;
 	private FragmentContainer search_number;
+	private ImageView nvjie;
+	private ImageView nanjie;
+	private ImageView diaozhui;
+	private ImageView shoulian;
+	private ImageView kelajie;
+	private ImageView duijie;
+	private ImageView erding;
+	private ImageView taoxi;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
 	{
@@ -70,6 +80,67 @@ public class OtherIndexFragment extends BaseFragment
 		index_container.setAdapter(mAdapter);
 		id=ResourceUtil.getId(getContext(),"product_search");
 		product_search= (Button)view.findViewById(id);
+
+		id=ResourceUtil.getId(getContext(),"nvjie");
+		nvjie= (ImageView) view.findViewById(id);
+		id=ResourceUtil.getId(getContext(),"nanjie");
+		nanjie= (ImageView) view.findViewById(id);
+		id=ResourceUtil.getId(getContext(),"erding");
+		erding= (ImageView) view.findViewById(id);
+		id=ResourceUtil.getId(getContext(),"shoulian");
+		shoulian= (ImageView) view.findViewById(id);
+		id=ResourceUtil.getId(getContext(),"kelajie");
+		kelajie= (ImageView) view.findViewById(id);
+		id=ResourceUtil.getId(getContext(),"diaozhui");
+		diaozhui= (ImageView) view.findViewById(id);
+		id=ResourceUtil.getId(getContext(),"taoxi");
+		taoxi= (ImageView) view.findViewById(id);
+		id=ResourceUtil.getId(getContext(),"duijie");
+		duijie= (ImageView) view.findViewById(id);
+		shoulian.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				MainFragment.instance.addFragmentToCurrent(new ProductListFragment(String.valueOf(29), false,"spot",String.valueOf(29),1), false);
+			}
+		});
+		nvjie.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				MainFragment.instance.addFragmentToCurrent(new ProductListFragment(String.valueOf(12), false,"spot",String.valueOf(12),1), false);
+			}
+		});
+		kelajie.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				MainFragment.instance.addFragmentToCurrent(new ProductListFragment(String.valueOf(25), false,"spot",String.valueOf(25),1), false);
+			}
+		});
+		duijie.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				MainFragment.instance.addFragmentToCurrent(new ProductListFragment(String.valueOf(16), false,"spot",String.valueOf(16),1), false);
+			}
+		});
+		erding.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				MainFragment.instance.addFragmentToCurrent(new ProductListFragment(String.valueOf(19), false,"spot",String.valueOf(19),1), false);
+			}
+		});
+		nanjie.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				MainFragment.instance.addFragmentToCurrent(new ProductListFragment(String.valueOf(15), false,"spot",String.valueOf(15),1), false);
+			}
+		});
+		shoulian.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				MainFragment.instance.addFragmentToCurrent(new ProductListFragment(String.valueOf(29), false,"spot",String.valueOf(29),1), false);
+			}
+		});
+
+
 		id=ResourceUtil.getId(getContext(),"product_search_number");
 		product_search_number= (EditText)view.findViewById(id);
 		id=ResourceUtil.getId(getContext(),"search_number");

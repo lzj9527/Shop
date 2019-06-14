@@ -71,6 +71,7 @@ public class MainFragment extends BaseFragment {
 	public static MainFragment instance = null;
 
 	private View menubar_layout;
+	private View setting_show;
 	private MenuBar mMenuBar;
 	private ExtendImageView mLogoImageView;
 	private ShopLogoAndADResponse mShopLogoAndADResponse;
@@ -79,8 +80,8 @@ public class MainFragment extends BaseFragment {
 	private ImageView mOther;
 	private LinearLayout mMainPage;
 
-	private LinearLayout mLogoShow;
 	private ImageView mLogo;
+	private ImageView mgia;
 
 	// private View fragmentC, fragmentC1, fragmentC2, fragmentC3;
 	// private int fragmentCID, fragmentC1ID, fragmentC2ID, fragmentC3ID;
@@ -124,6 +125,9 @@ public class MainFragment extends BaseFragment {
 		int id = ResourceUtil.getId(getContext(), "menubar_layout");
 		menubar_layout = view.findViewById(id);
 
+		id=ResourceUtil.getId(getContext(),"setting_show");
+		setting_show=view.findViewById(id);
+
 //		id = ResourceUtil.getId(getContext(), "menu_container");
 //		ScrollGridView menu_container = (ScrollGridView)view.findViewById(id);
 //		menu_container.setNumColumns(3);
@@ -152,14 +156,24 @@ public class MainFragment extends BaseFragment {
 		id=ResourceUtil.getId(getContext(),"mainPage");
 		mMainPage= (LinearLayout) view.findViewById(id);
 
+		id=ResourceUtil.getId(getContext(),"gia");
+		mgia= (ImageView) view.findViewById(id);
+		mgia.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				url=Config.BasePrefix+"/addons/ewei_shop/template/pad/default/api/new-gia.html?isFromOrder=false";
+				MainFragment.instance.addWebFragmentToCurrent(url, false);
+			}
+		});
 
 		id=ResourceUtil.getId(getContext(),"customized");
 		mCustomized= (ImageView) view.findViewById(id);
 		mCustomized.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				mMainPage.setVisibility(View.GONE);
-				replace(instance, new MainIndexFragment(), false);
+
+				setCurrentMenuImpl(6);
+
 			}
 		});
 
@@ -169,10 +183,13 @@ public class MainFragment extends BaseFragment {
 		mOther.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				mMainPage.setVisibility(View.GONE);
-				replace(instance, new OtherIndexFragment(), false);
+				setCurrentMenuImpl(1);
+
 			}
 		});
+
+
+
 
 		id = ResourceUtil.getId(getContext(), "menubar");
 		mMenuBar = (MenuBar) view.findViewById(id);
@@ -195,6 +212,7 @@ public class MainFragment extends BaseFragment {
 				setCurrentMenuImpl(menuIndex);
 			}
 		});
+
 		mMenuBar.setCurrentMenu(6);
 
 		id = ResourceUtil.getId(getContext(), "setting");
@@ -219,41 +237,83 @@ public class MainFragment extends BaseFragment {
 			}
 		});
 
+		id = ResourceUtil.getId(getContext(), "shopping");
+		final View shopping = view.findViewById(id);
+		shopping.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (AndroidUtils.isFastClick())
+					return;
+				mMainPage.setVisibility(View.GONE);
+//				url=Config.BasePrefix+"/addons/ewei_shop/template/pad/default/shop/new-cart.html";
+//				replace(instance, new MainWebFragment(url, 0), false);
+				setCurrentMenu(2);
+			}
+		});
 
-		id=ResourceUtil.getId(getContext(),"logoShow");
-		mLogoShow= (LinearLayout) view.findViewById(id);
+		id = ResourceUtil.getId(getContext(), "dingdan");
+		final View dingdan = view.findViewById(id);
+		dingdan.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (AndroidUtils.isFastClick())
+					return;
+				mMainPage.setVisibility(View.GONE);
+//				url=Config.BasePrefix+"/addons/ewei_shop/template/pad/default/shop/new-order.html";
+//				replace(instance, new MainWebFragment(url, 0), false);
+				setCurrentMenu(3);
+			}
+		});
+
+
+		id = ResourceUtil.getId(getContext(), "shoucang");
+		final View shoucang = view.findViewById(id);
+		shoucang.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (AndroidUtils.isFastClick())
+					return;
+//				mMainPage.setVisibility(View.GONE);
+//				url=Config.BasePrefix+"/addons/ewei_shop/template/pad/default/shop/new-collection.html";
+//				replace(instance, new MainWebFragment(url, 0), false);
+				setCurrentMenu(4);
+			}
+		});
+
+
+
 
 		id=ResourceUtil.getId(getContext(),"logo");
 		mLogo= (ImageView) view.findViewById(id);
 
-		Bitmap bitmap= ((BitmapDrawable)mLogo.getDrawable()).getBitmap();
-		ArrayList<Integer> picturePixel= getPicturePixel(bitmap);
-		HashMap<Integer,Integer> color2=new HashMap<>();
-		for (Integer color:picturePixel){
-			if (color2.containsKey(color)){
-				Integer integer = color2.get(color);
-				integer++;
-				color2.remove(color);
-				color2.put(color,integer);
-
-			}else{
-				color2.put(color,1);
-			}
-		}
-		//挑选数量最多的颜色
-		Iterator iter = color2.entrySet().iterator();
-		int count=0;
-		int color=0;
-		while (iter.hasNext()) {
-			Map.Entry entry = (Map.Entry) iter.next();
-			int value = (int) entry.getValue();
-			if (count<value){
-				count=value;
-				color= (int) entry.getKey();
-			}
-
-		}
-		mLogoShow.setBackgroundColor(color);
+//		Bitmap bitmap= ((BitmapDrawable)mLogo.getDrawable()).getBitmap();
+//		ArrayList<Integer> picturePixel= getPicturePixel(bitmap);
+//		HashMap<Integer,Integer> color2=new HashMap<>();
+//		for (Integer color:picturePixel){
+//			if (color2.containsKey(color)){
+//				Integer integer = color2.get(color);
+//				integer++;
+//				color2.remove(color);
+//				color2.put(color,integer);
+//
+//			}else{
+//				color2.put(color,1);
+//			}
+//		}
+//		//挑选数量最多的颜色
+//		Iterator iter = color2.entrySet().iterator();
+//		int count=0;
+//		int color=0;
+//		while (iter.hasNext()) {
+//			Map.Entry entry = (Map.Entry) iter.next();
+//			int value = (int) entry.getValue();
+//			if (count<value){
+//				count=value;
+//				color= (int) entry.getKey();
+//			}
+//
+//		}
+//		mLogoShow.setBackgroundColor(color);
 
 		id = ResourceUtil.getId(getActivity(), "main_tryon");
 		mLogoImageView = (ExtendImageView) view.findViewById(id);
@@ -316,6 +376,8 @@ public class MainFragment extends BaseFragment {
 				ViewTools.adapterViewPadding(setting, scaled);
 			}
 		});
+
+
 
 		return view;
 	}
@@ -385,7 +447,7 @@ public class MainFragment extends BaseFragment {
 			public void run() {
 				if (num > 0) {
 					mShoppingcartNum.setText("" + num);
-					mShoppingcartNum.setVisibility(View.VISIBLE);
+//					mShoppingcartNum.setVisibility(View.VISIBLE);
 				} else
 					mShoppingcartNum.setVisibility(View.GONE);
 			}
@@ -523,7 +585,7 @@ public class MainFragment extends BaseFragment {
 	// });
 	// }
 	// }
-Handler handler;
+	Handler handler;
 	//获取toKen
 //	public String getToken(){
 //		handler=new Handler();
@@ -598,7 +660,7 @@ Handler handler;
 //				public void onRequestError(int requestCode, long taskId, ErrorInfo error) {
 //
 
-//				}
+	//				}
 //
 //				@Override
 //				public void onRequestResult(int requestCode, long taskId, BaseResponse response, DataFrom from) {
@@ -611,7 +673,7 @@ Handler handler;
 //		return  Config.token;
 //	}
 	String url;
-    private static long lastClickTime;
+	private static long lastClickTime;
 	private void setCurrentMenuImpl(final int index) {
 		// fragmentC1.setVisibility(View.INVISIBLE);
 		// fragmentC2.setVisibility(View.INVISIBLE);
@@ -619,9 +681,9 @@ Handler handler;
 		// fragmentC.setVisibility(View.INVISIBLE);
 		// if (ProductDetailsFragment.instance != null)
 		// ProductDetailsFragment.instance.onBackPressed();
-        long curClickTime = System.currentTimeMillis();
-        Log.d(TAG, "run: curClickTime="+curClickTime);
-        Log.d(TAG, "run: lastClickTime="+lastClickTime);
+		long curClickTime = System.currentTimeMillis();
+		Log.d(TAG, "run: curClickTime="+curClickTime);
+		Log.d(TAG, "run: lastClickTime="+lastClickTime);
 		AndroidUtils.MainHandler.post(new Runnable() {
 			@Override
 			public void run() {
@@ -641,7 +703,10 @@ Handler handler;
 				switch (index) {
 					case 0://主页
 						mMainPage.setVisibility(View.VISIBLE);
+						menubar_layout.setVisibility(View.GONE);
+						setting_show.setVisibility(View.GONE);
 //						replace(instance, new MainFragment(), false);
+
 						break;
 //					case 0:// 定制
 //						// fragmentC1.setVisibility(View.VISIBLE);
@@ -655,13 +720,17 @@ Handler handler;
 						// ensureOtherIndexFragment();
 						// fragment2.popBackStackInclusive();
 						mMainPage.setVisibility(View.GONE);
+						menubar_layout.setVisibility(View.VISIBLE);
+						setting_show.setVisibility(View.VISIBLE);
+						setCurrentMenu(7);
 						replace(instance, new OtherIndexFragment(), false);
 						break;
 					case 2:// 购物车
 //						 fragmentC.setVisibility(View.VISIBLE);
 						mMainPage.setVisibility(View.GONE);
+						menubar_layout.setVisibility(View.VISIBLE);
 //						url = Config.WebShoppingCart + "?key=" + LoginHelper.getUserKey(getContext());
-
+						setting_show.setVisibility(View.VISIBLE);
 						url=Config.BasePrefix+"/addons/ewei_shop/template/pad/default/shop/new-cart.html";
 //						url="https://www.baidu.com";
 						replace(instance, new MainWebFragment(url, 0), false);
@@ -692,6 +761,8 @@ Handler handler;
 						// fragmentC.setVisibility(View.VISIBLE);
 //						url = Config.WebOrder + "?key=" + LoginHelper.getUserKey(getContext());
 						mMainPage.setVisibility(View.GONE);
+						setting_show.setVisibility(View.VISIBLE);
+						menubar_layout.setVisibility(View.VISIBLE);
 						url=Config.BasePrefix+"/addons/ewei_shop/template/pad/default/shop/new-order.html";
 						replace(instance, new MainWebFragment(url, 0), false);
 						break;
@@ -699,6 +770,8 @@ Handler handler;
 						// fragmentC3.setVisibility(View.VISIBLE);
 //						url = Config.WebSearch + "?key=" + LoginHelper.getUserKey(getContext());
 						mMainPage.setVisibility(View.GONE);
+						menubar_layout.setVisibility(View.VISIBLE);
+						setting_show.setVisibility(View.VISIBLE);
 						url=Config.BasePrefix+"/addons/ewei_shop/template/pad/default/shop/new-collection.html";
 						replace(instance, new MainWebFragment(url, 0), false);
 						// ensureSearchFragment();
@@ -706,10 +779,21 @@ Handler handler;
 						break;
 					case 5:// 足迹
 						// fragmentC.setVisibility(View.VISIBLE);
-						mMainPage.setVisibility(View.GONE);
-						replace(instance, new BrowseHistoryFragment(), false);
+//						mMainPage.setVisibility(View.GONE);
+//						replace(instance, new BrowseHistoryFragment(), false);
+						menubar_layout.setVisibility(View.VISIBLE);
+						setting_show.setVisibility(View.VISIBLE);
+						FragmentActivity.launchMe(getActivity(), new SettingFragment());
 						break;
-
+					case 6:
+						mMainPage.setVisibility(View.GONE);
+						menubar_layout.setVisibility(View.VISIBLE);
+						setting_show.setVisibility(View.VISIBLE);
+						setCurrentMenu(7);
+						replace(instance, new MainIndexFragment(), false);
+						break;
+                    case  7:
+                        break;
 				}
 
 				invalidateMenuBar();
@@ -1127,7 +1211,7 @@ Handler handler;
 
 
 
- 	public void addProductDetailFragmentToCurrent(String goodsId, String tag, boolean isShop, boolean hasModelInfo,
+	public void addProductDetailFragmentToCurrent(String goodsId, String tag, boolean isShop, boolean hasModelInfo,
 												  boolean backToRoot) {
 		if (isShop) {
 			mGoodsId = goodsId;

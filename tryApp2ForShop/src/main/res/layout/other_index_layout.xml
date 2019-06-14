@@ -3,12 +3,122 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:paddingBottom="40px"
-    android:paddingLeft="140px"
-    android:paddingRight="140px"
-    android:paddingTop="40px"
+
     android:orientation="vertical">
-<!-- android:background="@android:colo/white" 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5">
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <LinearLayout
+                    android:layout_width="250dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="现货总库存:"
+                    android:textColor="@color/main_menubar_background"
+                    android:layout_marginTop="80dp"
+                    android:layout_marginLeft="30dp"
+                    android:gravity="center"
+                    android:textSize="30dp"/>
+                <TextView
+                    android:id="@+id/product_all_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="25dp"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/main_menubar_background"
+                    android:layout_gravity="center"
+
+                    android:text="货数"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="(预计3-5天到货)"
+                        android:textColor="@color/main_menubar_background"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:textSize="25dp"/>
+                </LinearLayout>
+                <ImageView
+                    android:id="@+id/nvjie"
+                    android:layout_marginLeft="220dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/womenring"/>
+
+                <ImageView
+                    android:id="@+id/nanjie"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="420dp"
+                    android:src="@drawable/menring" />
+
+                <ImageView
+                    android:id="@+id/diaozhui"
+                    android:src="@drawable/diaozhui"
+                    android:layout_marginLeft="620dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp" />
+
+                <ImageView
+                    android:id="@+id/shoulian"
+                    android:src="@drawable/shoulian"
+                    android:layout_marginLeft="820dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp" />
+
+                <ImageView
+                    android:id="@+id/kelajie"
+                    android:src="@drawable/kelajie"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="250dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp" />
+
+
+                <ImageView
+                    android:id="@+id/duijie"
+                    android:src="@drawable/duijie"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="450dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp" />
+
+                <ImageView
+                    android:id="@+id/erding"
+                    android:src="@drawable/erding"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="650dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp" />
+
+                <ImageView
+                    android:id="@+id/taoxi"
+                    android:src="@drawable/photo"
+                    android:layout_marginLeft="850dp"
+                    android:layout_gravity="bottom"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp" />
+
+
+
+            </FrameLayout>
+        </LinearLayout>
+<!-- android:background="@android:colo/white"
     android:paddingBottom="40px"
     android:paddingLeft="140px"
     android:paddingRight="140px" -->
@@ -21,6 +131,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:visibility="gone"
         android:orientation="vertical">
        <android.extend.widget.ExtendLinearLayout
            android:gravity="center"
@@ -33,7 +144,7 @@
                android:textColor="@color/main_menubar_background"
                android:textSize="25dp"/>
            <TextView
-               android:id="@+id/product_all_number"
+               android:id="@+id/product_all_number2"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:textSize="25dp"
@@ -90,6 +201,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="5"
+        android:visibility="gone"
         android:scrollbars="none" >
     </android.extend.widget.adapter.ScrollGridView>
 

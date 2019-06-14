@@ -862,10 +862,10 @@ public class ProductDetailsFragment extends BaseFragment implements OnModelLoadL
 			mUnityViewConver.setVisibility(View.VISIBLE);
 			MainActivity.instance.detachUnityPlayer();
 //			product_3d.removeView(unity_container);
-			product_3d.removeView(unity_container);
+//			product_3d.removeView(unity_container);
 //			unity_container.removeView(unity_container);
 			unity_container.removeView(MainActivity.instance.mUnityPlayer);
-			unity_container.removeAllViews();
+//			unity_container.removeAllViews();
 			unity_container.addView(MainActivity.instance.mUnityPlayer, 0);
 			MainActivity.instance.mUnityPlayer.setVisibility(View.VISIBLE);
 			MainActivity.instance.mUnityPlayer.resume();

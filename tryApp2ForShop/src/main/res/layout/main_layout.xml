@@ -24,56 +24,448 @@
         android:layout_height="match_parent"
         android:background="@color/base_background"
         android:orientation="vertical">
-    <android.extend.widget.ExtendLinearLayout
-        android:id="@+id/logoShow"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1"
-        android:orientation="vertical">
 
-        <android.extend.widget.ExtendImageView
-            android:id="@+id/logo"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:src="@drawable/zds"/>
-    </android.extend.widget.ExtendLinearLayout>
-
-        <LinearLayout
+        <android.extend.widget.ExtendLinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/background"
+            android:orientation="vertical">
+
+
+            <android.extend.widget.ExtendImageView
+                android:id="@+id/logo"
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:src="@drawable/zds" />
+
+
+            <LinearLayout
+                android:id="@+id/menubar_layout2"
+                android:layout_width="1000dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="60dp"
+                android:orientation="horizontal">
+                <FrameLayout
+                    android:layout_width="650dp"
+                    android:layout_height="50dp">
+                <EditText
+                    android:layout_width="550dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="100dp"
+                    android:hint="请输入款号或名称"/>
+                  <Button
+                      android:layout_width="30dp"
+                      android:layout_height="30dp"
+                      android:layout_gravity="end|center"
+                      android:background="@drawable/sousuo"
+                      android:layout_marginRight="20dp"/>
+
+                </FrameLayout>
+                <!--<ScrollView-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:scrollbars="none">-->
+
+                <!--<android.extend.widget.MenuBar-->
+                <!--android:id="@+id/menubar2"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content">-->
+
+                <!--<LinearLayout-->
+                <!--android:id="@+id/menugroup2"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:orientation="horizontal">-->
+
+                <!--<android.extend.widget.MenuView-->
+                <!--android:layout_width="40dp"-->
+                <!--android:layout_height="40dp"-->
+                <!--android:layout_marginLeft="18dp"-->
+                <!--android:background="@drawable/selector_main_menuitem"-->
+                <!--android:clickable="true"-->
+                <!--android:focusable="true"-->
+                <!--android:visibility="gone">-->
+
+                <!--<ImageView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:scaleType="fitCenter"-->
+                <!--android:src="@drawable/selector_main_porduct" />-->
+                <!--</android.extend.widget.MenuView>-->
+
+                <!--<android.extend.widget.MenuView-->
+                <!--android:layout_width="40dp"-->
+                <!--android:layout_height="40dp"-->
+                <!--android:layout_marginLeft="18dp"-->
+                <!--android:background="@drawable/selector_main_menuitem"-->
+                <!--android:clickable="true"-->
+                <!--android:focusable="true"-->
+                <!--android:visibility="gone">-->
+
+                <!--<ImageView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:scaleType="fitCenter"-->
+                <!--android:src="@drawable/selector_main_other" />-->
+                <!--</android.extend.widget.MenuView>-->
+
+                <!--<android.extend.widget.MenuView-->
+                <!--android:layout_width="40dp"-->
+                <!--android:layout_height="40dp"-->
+                <!--android:layout_marginLeft="18dp"-->
+                <!--android:background="@drawable/selector_main_menuitem"-->
+                <!--android:clickable="true"-->
+                <!--android:focusable="true">-->
+
+                <!--<ImageView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:scaleType="fitCenter"-->
+
+                <!--android:src="@drawable/main_shoppingcart2" />-->
+
+                <!--<TextView-->
+                <!--android:id="@+id/shoppingcart_num2"-->
+                <!--android:layout_width="15dp"-->
+                <!--android:layout_height="15dp"-->
+                <!--android:layout_gravity="top|end"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:layout_marginEnd="20dp"-->
+                <!--android:background="@drawable/shape_main_menubar_badge_bg"-->
+                <!--android:gravity="center"-->
+                <!--android:text="99"-->
+                <!--android:textColor="@color/main_menubar_badge_font"-->
+                <!--android:textSize="10dp"-->
+                <!--android:visibility="visible" />-->
+                <!--</android.extend.widget.MenuView>-->
+
+                <!--<android.extend.widget.MenuView-->
+                <!--android:layout_width="40dp"-->
+                <!--android:layout_height="40dp"-->
+                <!--android:layout_marginLeft="18dp"-->
+                <!--android:background="@drawable/selector_main_menuitem"-->
+                <!--android:clickable="true"-->
+                <!--android:focusable="true">-->
+
+                <!--<ImageView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:scaleType="fitCenter"-->
+                <!--android:src="@drawable/main_order2" />-->
+                <!--</android.extend.widget.MenuView>-->
+
+                <!--<android.extend.widget.MenuView-->
+                <!--android:layout_width="40dp"-->
+                <!--android:layout_height="40dp"-->
+                <!--android:layout_marginLeft="18dp"-->
+                <!--android:background="@drawable/selector_main_menuitem"-->
+                <!--android:clickable="true"-->
+                <!--android:focusable="true">-->
+
+                <!--<ImageView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:scaleType="fitCenter"-->
+                <!--android:src="@drawable/main_search2" />-->
+                <!--</android.extend.widget.MenuView>-->
+                <!--&lt;!&ndash;<android.extend.widget.MenuView&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="87dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:background="@drawable/selector_main_menuitem"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:clickable="true"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:focusable="true"&ndash;&gt;-->
+                <!--&lt;!&ndash;&gt;&ndash;&gt;-->
+
+                <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_gravity="center"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:scaleType="fitCenter"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:src="@drawable/selector_main_history" />&ndash;&gt;-->
+                <!--&lt;!&ndash;</android.extend.widget.MenuView>&ndash;&gt;-->
+                <!--</LinearLayout>-->
+                <!--</android.extend.widget.MenuBar>-->
+
+                <!--</ScrollView>-->
+
+
+                <LinearLayout
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="25dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/shopping"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:layout_gravity="center"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/main_shoppingcart2" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:textSize="10dp"
+                        android:text="购物车"
+                        android:textColor="#ffff" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="25dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/dingdan"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:textSize="1dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/main_order2" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:text="订单"
+                        android:textSize="10dp"
+                        android:textColor="#ffff" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="25dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/shoucang"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:clickable="true"
+                        android:layout_gravity="center"
+                        android:focusable="true"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/main_search2" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:text="收藏"
+                        android:textSize="10dp"
+                        android:textColor="#ffff" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="25dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/setting2"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/main_set2" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:textSize="10dp"
+                        android:text="我的"
+                        android:textColor="#ffff" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.extend.widget.ExtendLinearLayout>
+
+        <FrameLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="2">
 
+
             <!--<android.extend.widget.adapter.ScrollGridView-->
-                <!--android:id="@+id/menu_container"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:layout_weight="5"-->
-                <!--android:scrollbars="none"></android.extend.widget.adapter.ScrollGridView>-->
-            <android.extend.widget.ExtendImageView
-                android:id="@+id/customized"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="400dp"
-                android:src="@drawable/main_porduct_s"/>
-            <android.extend.widget.ExtendImageView
-                android:id="@+id/other"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="100dp"
-                android:src="@drawable/main_others_s"/>
-        </LinearLayout>
+            <!--android:id="@+id/menu_container"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="5"-->
+            <!--android:scrollbars="none"></android.extend.widget.adapter.ScrollGridView>-->
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="150dp"
+                android:layout_marginLeft="350dp"
+                android:orientation="vertical">
+
+                <android.extend.widget.ExtendImageView
+                    android:id="@+id/customized"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:src="@drawable/order" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:text="专属定制"
+                    android:textColor="#FF333333"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="150dp"
+                android:layout_marginLeft="600dp"
+                android:orientation="vertical">
+
+                <android.extend.widget.ExtendImageView
+                    android:id="@+id/other"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:src="@drawable/product" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:text="精美现货"
+                    android:textColor="#FF333333"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="150dp"
+                android:layout_marginLeft="80dp"
+                android:orientation="vertical">
+
+                <android.extend.widget.ExtendImageView
+                    android:id="@+id/gia"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:src="@drawable/gia2" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:text="GIA裸石"
+                    android:textColor="#FF333333"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="150dp"
+                android:layout_marginLeft="850dp"
+                android:orientation="vertical">
+
+                <android.extend.widget.ExtendImageView
+                    android:id="@+id/zs4C"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:src="@drawable/zs4c" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:text="钻石4C"
+                    android:textColor="#FF333333"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="150dp"
+                android:layout_marginLeft="350dp"
+                android:layout_marginTop="280dp"
+                android:orientation="vertical">
+
+                <android.extend.widget.ExtendImageView
+                    android:id="@+id/train"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:src="@drawable/train" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:text="培训指南"
+                    android:textColor="#FF333333"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="150dp"
+                android:layout_marginLeft="600dp"
+                android:layout_marginTop="280dp"
+                android:orientation="vertical">
+
+                <android.extend.widget.ExtendImageView
+                    android:id="@+id/sampleRoom"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:src="@drawable/banfang" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:text="版房"
+                    android:textColor="#FF333333"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+
+        </FrameLayout>
     </android.extend.widget.ExtendLinearLayout>
+
     <LinearLayout
         android:id="@+id/menubar_layout"
-        android:layout_width="90dp"
-        android:layout_height="350dp"
+        android:layout_width="50dp"
+        android:layout_height="270dp"
         android:layout_marginTop="150dp"
-        android:background="#B1003D"
-        android:orientation="vertical" >
+        android:visibility="gone"
+        android:orientation="vertical">
 
         <android.extend.widget.ExtendImageView
             android:id="@+id/main_tryon"
@@ -81,19 +473,18 @@
             android:layout_height="90dp"
             android:layout_gravity="center_horizontal"
             android:scaleType="centerCrop"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
 
         <ScrollView
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:scrollbars="none" >
+            android:scrollbars="none">
 
             <android.extend.widget.MenuBar
                 android:id="@+id/menubar"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:id="@+id/menugroup"
@@ -102,29 +493,36 @@
                     android:orientation="vertical">
 
                     <android.extend.widget.MenuView
-                        android:layout_width="match_parent"
-                        android:layout_height="87dp"
+                        android:layout_width="35dp"
+                        android:layout_height="60dp"
                         android:background="@drawable/selector_main_menuitem"
                         android:clickable="true"
-                        android:focusable="true"
-                        >
+                        android:focusable="true">
 
                         <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
+
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/selector_main_porduct" />
+                            android:src="@drawable/shouye" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:gravity="center"
+                            android:text="返回首页"
+                            android:textColor="#4A4A4A"
+                            android:textSize="8dp" />
                     </android.extend.widget.MenuView>
 
                     <android.extend.widget.MenuView
-                        android:layout_width="match_parent"
-                        android:layout_height="87dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:background="@drawable/selector_main_menuitem"
                         android:clickable="true"
                         android:focusable="true"
-                        android:visibility="gone"
-                        >
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="match_parent"
@@ -135,91 +533,162 @@
                     </android.extend.widget.MenuView>
 
                     <android.extend.widget.MenuView
-                        android:layout_width="match_parent"
-                        android:layout_height="87dp"
+                        android:layout_width="35dp"
+                        android:layout_height="60dp"
+                        android:layout_marginTop="10dp"
                         android:background="@drawable/selector_main_menuitem"
                         android:clickable="true"
-                        android:focusable="true"
-                        >
+                        android:focusable="true">
 
                         <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
+
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
                             android:scaleType="fitCenter"
                             android:src="@drawable/selector_main_shoppingcart" />
 
                         <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:gravity="center"
+                            android:text="购物车"
+                            android:textColor="#4A4A4A"
+                            android:textSize="10dp" />
+
+                        <TextView
                             android:id="@+id/shoppingcart_num"
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="23dp"
                             android:layout_gravity="top|end"
-                            android:layout_marginEnd="20dp"
                             android:layout_marginTop="10dp"
+                            android:layout_marginEnd="20dp"
                             android:background="@drawable/shape_main_menubar_badge_bg"
                             android:gravity="center"
                             android:text="99"
                             android:textColor="@color/main_menubar_badge_font"
                             android:textSize="10dp"
-                            android:visibility="visible" />
+                            android:visibility="gone" />
                     </android.extend.widget.MenuView>
+
                     <android.extend.widget.MenuView
-                        android:layout_width="match_parent"
-                        android:layout_height="87dp"
+                        android:layout_width="35dp"
+                        android:layout_height="60dp"
+                        android:layout_marginTop="10dp"
                         android:background="@drawable/selector_main_menuitem"
                         android:clickable="true"
-                        android:focusable="true"
-                        >
+                        android:focusable="true">
 
                         <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
                             android:scaleType="fitCenter"
                             android:src="@drawable/selector_main_order" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:gravity="center"
+                            android:text="订单"
+                            android:textColor="#4A4A4A"
+                            android:textSize="10dp" />
                     </android.extend.widget.MenuView>
+
                     <android.extend.widget.MenuView
-                        android:layout_width="match_parent"
-                        android:layout_height="87dp"
+                        android:layout_width="35dp"
+                        android:layout_height="60dp"
+                        android:layout_marginTop="10dp"
                         android:background="@drawable/selector_main_menuitem"
                         android:clickable="true"
-                        android:focusable="true"
-                        >
-                        <ImageView
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:layout_gravity="center"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/selector_main_search"
-                             />
-                    </android.extend.widget.MenuView>
-                    <!--<android.extend.widget.MenuView-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="87dp"-->
-                        <!--android:background="@drawable/selector_main_menuitem"-->
-                        <!--android:clickable="true"-->
-                        <!--android:focusable="true"-->
-                        <!--&gt;-->
+                        android:focusable="true">
 
-                        <!--<ImageView-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="match_parent"-->
-                            <!--android:layout_gravity="center"-->
-                            <!--android:scaleType="fitCenter"-->
-                            <!--android:src="@drawable/selector_main_history" />-->
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/selector_main_search" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:gravity="center"
+                            android:text="收藏"
+                            android:textColor="#4A4A4A"
+                            android:textSize="10dp" />
+                    </android.extend.widget.MenuView>
+
+                    <!--<android.extend.widget.MenuView-->
+                    <!--android:layout_width="50dp"-->
+                    <!--android:layout_height="70dp"-->
+                    <!--android:background="@drawable/selector_main_menuitem"-->
+                    <!--android:clickable="true"-->
+                    <!--android:focusable="true"-->
+                    <!--&gt;-->
+
+                    <!--<ImageView-->
+                    <!--android:layout_width="50dp"-->
+                    <!--android:layout_height="50dp"-->
+                    <!--android:scaleType="fitCenter"-->
+                    <!--android:src="@drawable/selector_main_set" />-->
+                    <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="15dp"-->
+                    <!--android:layout_gravity="bottom"-->
+                    <!--android:layout_marginTop="5dp"-->
+                    <!--android:gravity="center"-->
+                    <!--android:textColor="#4A4A4A"-->
+                    <!--android:text="我的"/>-->
                     <!--</android.extend.widget.MenuView>-->
                 </LinearLayout>
             </android.extend.widget.MenuBar>
         </ScrollView>
 
+        <!--<ImageView-->
+            <!--android:id="@+id/setting"-->
+            <!--android:layout_width="50dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:layout_marginLeft="-13dp"-->
+            <!--android:layout_gravity="bottom|center_horizontal"-->
+            <!--android:scaleType="fitCenter"-->
+            <!--android:src="@drawable/selector_main_set"-->
+            <!--/>-->
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="15dp"-->
+            <!--android:layout_marginLeft="-17dp"-->
+            <!--android:layout_gravity="bottom"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:textColor="#4A4A4A"-->
+            <!--android:text="我的"/>-->
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/setting_show"
+        android:layout_width="35dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="380dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
         <ImageView
             android:id="@+id/setting"
-            android:layout_width="fill_parent"
-            android:layout_height="89dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_gravity="bottom|center_horizontal"
             android:scaleType="fitCenter"
-            android:src="@drawable/selector_main_set" />
+            android:src="@drawable/selector_main_set"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:textSize="10dp"
+            android:textColor="#4A4A4A"
+            android:text="我的"/>
     </LinearLayout>
-
 </FrameLayout>
 </LinearLayout>

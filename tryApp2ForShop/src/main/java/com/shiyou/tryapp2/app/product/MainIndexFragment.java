@@ -73,6 +73,10 @@ public class MainIndexFragment extends BaseFragment
 
 	private ViewPager mViewPager;
 	private LinearLayout mDotContainer;
+	private ImageView mWomenRing;
+	private ImageView mMenRing;
+	private ImageView mPendant;
+	private ImageView mRightRing;
 
 	private BasePagerAdapter<AbsAdapterItem> mPagerAdapter;
 	private OnPageChangeListener mPageChangeListener = new OnPageChangeListener()
@@ -132,6 +136,17 @@ public class MainIndexFragment extends BaseFragment
 			}
 		});
 
+		id=ResourceUtil.getId(getActivity(),"womenRing");
+		mWomenRing= (ImageView) view.findViewById(id);
+		id=ResourceUtil.getId(getActivity(),"menRing");
+		mMenRing= (ImageView) view.findViewById(id);
+		id=ResourceUtil.getId(getActivity(),"pendant");
+		mPendant= (ImageView) view.findViewById(id);
+		id=ResourceUtil.getId(getActivity(),"rightRing");
+		mRightRing= (ImageView) view.findViewById(id);
+
+
+
 		id = ResourceUtil.getId(getActivity(), "dot_container");
 		mDotContainer = (LinearLayout)view.findViewById(id);
 
@@ -144,7 +159,31 @@ public class MainIndexFragment extends BaseFragment
 
 		doRefresh();
 
+		mWomenRing.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
 
+				MainFragment.instance.addFragmentToCurrent(new ProductListFragment(String.valueOf(12), true,"order",String.valueOf(12),0), false);
+			}
+		});
+		mMenRing.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				MainFragment.instance.addFragmentToCurrent(new ProductListFragment(String.valueOf(15), true,"order",String.valueOf(15),0), false);
+			}
+		});
+		mPendant.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				MainFragment.instance.addFragmentToCurrent(new ProductListFragment(String.valueOf(21), true,"order",String.valueOf(21),0), false);
+			}
+		});
+		mRightRing.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				MainFragment.instance.addFragmentToCurrent(new ProductListFragment(String.valueOf(16), true,"order",String.valueOf(16),0), false);
+			}
+		});
 		return view;
 	}
 
@@ -583,6 +622,7 @@ public class MainIndexFragment extends BaseFragment
 					indexProductAdapter.addItem(new CategoryAdapterItem(0));
 					for (CategoryItem mCategoryItem : mGoodsCategoryResponse.findZuanShiCategoryList())
 					{
+
 						indexProductAdapter.addItem(new CategoryAdapterItem(mCategoryItem));
 					}
 					indexProductAdapter.addItem(new CategoryAdapterItem(1));
