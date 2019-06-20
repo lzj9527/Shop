@@ -8,12 +8,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5">
-
+            android:layout_weight="5"
+            android:orientation="vertical">
+            <android.extend.widget.ExtendViewPager
+                android:id="@+id/viewpager2"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:background="@android:color/transparent" >
+            </android.extend.widget.ExtendViewPager>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/peihuobg"
+                android:scaleType="centerCrop"
+                />
         </LinearLayout>
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="1000dp"
             android:layout_height="0dp"
+            android:layout_gravity="center"
             android:layout_weight="4">
             <FrameLayout
                 android:layout_width="match_parent"
@@ -108,7 +123,7 @@
 
                 <ImageView
                     android:id="@+id/taoxi"
-                    android:src="@drawable/photo"
+                    android:src="@drawable/taoxi"
                     android:layout_marginLeft="850dp"
                     android:layout_gravity="bottom"
                     android:layout_width="150dp"

@@ -199,7 +199,6 @@ public class MainIndexFragment extends BaseFragment
 		super.onDestroy();
 		instance = null;
 	}
-
 	public void doRefresh()
 	{
 		AndroidUtils.MainHandler.post(new Runnable()
@@ -210,7 +209,7 @@ public class MainIndexFragment extends BaseFragment
 				if (isResumed())
 				{
 					LogUtil.d(TAG, "doRefresh...");
-					loadAdvertisements();
+					loadShopLogoAndAD();
 					loadGoodsCategorys();
 				}
 				else
@@ -218,6 +217,7 @@ public class MainIndexFragment extends BaseFragment
 			}
 		});
 	}
+
 
 	// public MainIndexFragment getAdvertisementResponse()
 	// {

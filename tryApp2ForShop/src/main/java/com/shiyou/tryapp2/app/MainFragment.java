@@ -82,6 +82,7 @@ public class MainFragment extends BaseFragment {
 
 	private ImageView mLogo;
 	private ImageView mgia;
+	private ImageView mTrain;
 
 	// private View fragmentC, fragmentC1, fragmentC2, fragmentC3;
 	// private int fragmentCID, fragmentC1ID, fragmentC2ID, fragmentC3ID;
@@ -121,7 +122,13 @@ public class MainFragment extends BaseFragment {
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		mLayoutResID = ResourceUtil.getLayoutId(getContext(), "main_layout");
 		View view = super.onCreateView(inflater, container, savedInstanceState);
-
+		AndroidUtils.MainHandler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				LoginFragment loginFragment=new LoginFragment();
+				loginFragment.getToken();
+			}
+		},720000);
 		int id = ResourceUtil.getId(getContext(), "menubar_layout");
 		menubar_layout = view.findViewById(id);
 
@@ -161,8 +168,26 @@ public class MainFragment extends BaseFragment {
 		mgia.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				mMainPage.setVisibility(View.GONE);
+				setting_show.setVisibility(View.VISIBLE);
+				menubar_layout.setVisibility(View.VISIBLE);
 				url=Config.BasePrefix+"/addons/ewei_shop/template/pad/default/api/new-gia.html?isFromOrder=false";
-				MainFragment.instance.addWebFragmentToCurrent(url, false);
+
+				MainFragment.instance.addFragmentToCurrent(new MainWebFragment(url,0), false);
+			}
+		});
+		id=ResourceUtil.getId(getContext(),"train");
+		mTrain= (ImageView) view.findViewById(id);
+		mTrain.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+				mMainPage.setVisibility(View.GONE);
+				setting_show.setVisibility(View.VISIBLE);
+				menubar_layout.setVisibility(View.VISIBLE);
+				url="http://www.zsmtvip.com/web/index.php?c=article&a=notice-show&do=detail&id=3";
+
+				MainFragment.instance.addFragmentToCurrent(new MainWebFragment(url,0), false);
 			}
 		});
 
@@ -691,13 +716,7 @@ public class MainFragment extends BaseFragment {
 					AndroidUtils.MainHandler.postDelayed(this, 300L);
 					return;
 				}
-				AndroidUtils.MainHandler.postDelayed(new Runnable() {
-					@Override
-					public void run() {
-						LoginFragment loginFragment=new LoginFragment();
-						loginFragment.getToken();
-					}
-				},720000);
+
 
 
 				switch (index) {
